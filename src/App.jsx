@@ -5,51 +5,36 @@ import SectionSelect from './components/SectionSelect.jsx';
 import PacingModule from './components/PacingModule.jsx';
 import QuizSession from './components/QuizSession.jsx';
 import Results from './components/Results.jsx';
-import AISettings from './components/AISettings.jsx';
-import { questionBank, PART_META, DIAGNOSTIC_BLUEPRINT } from './data/questionBank.js';
+import { questionBank, PART_META } from './data/questionBank.js';
 
 /**
  * Top-level state machine for the TOEIC Mastery Simulator.
- *
- * Views: 'menu' → 'section' | 'pacing' → 'quiz' → 'results'
+ * Views: 'menu' → 'section' | 'pacing' → 'quiz' → 'results'.
  * A "session" is { title, subtitle, mode, pacing?, target?, blocks: [...] }
- * where each block carries a `part` field so the quiz can render the correct
- * stimulus and feedback.
+ * where each block carries a `part` field.
  */
 
-function tagBlocksWithPart(blocks, part) {
-  return blocks.map((block) => ({ ...block, part }));
+function blocksForParts(parts) {
+  const out = [];
+  for (const part of parts) {
+    const available = questionBank[part] || [];
+    out.push(...available.map((b) => ({ ...b, part })));
+  }
+  return out;
 }
 
-function buildDiagnosticSession() {
-  const blocks = [];
-  for (const { part, blocks: n } of DIAGNOSTIC_BLUEPRINT) {
-    const available = questionBank[part] || [];
-    blocks.push(...tagBlocksWithPart(available.slice(0, n), part));
-  }
-  return {
-    title: 'Full Simulation Diagnostic',
-    subtitle:
-      'A representative cross-section of all seven TOEIC parts. Pace yourself, submit each set, then study the 3-tier feedback.',
-    mode: 'diagnostic',
-    blocks,
-  };
+function buildExam(parts, title, subtitle, mode) {
+  return { title, subtitle, mode, blocks: blocksForParts(parts) };
 }
+
+const ALL_PARTS = [1, 2, 3, 4, 5, 6, 7];
+const LISTENING_PARTS = [1, 2, 3, 4];
+const READING_PARTS = [5, 6, 7];
 
 export default function App() {
   const [view, setView] = useState('menu');
   const [session, setSession] = useState(null);
   const [lastResults, setLastResults] = useState(null);
-  const [aiSettingsOpen, setAiSettingsOpen] = useState(false);
-
-  // AI Mode configuration (kept in memory; optionally persisted by AISettings).
-  const [aiConfig, setAiConfig] = useState(() => ({
-    enabled: false,
-    apiKey: typeof localStorage !== 'undefined' ? localStorage.getItem('toeic_ai_key') || '' : '',
-    model:
-      (typeof localStorage !== 'undefined' && localStorage.getItem('toeic_ai_model')) ||
-      'claude-opus-4-8',
-  }));
 
   const goMenu = useCallback(() => {
     setView('menu');
@@ -71,20 +56,43 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Banner
-        onHome={goMenu}
-        onOpenAi={() => setAiSettingsOpen(true)}
-        aiEnabled={aiConfig.enabled}
-      />
+      <Banner onHome={goMenu} />
 
       <main className="app-main">
         {view === 'menu' && (
           <MainMenu
-            onFullDiagnostic={() => startSession(buildDiagnosticSession())}
+            onFullExam={() =>
+              startSession(
+                buildExam(
+                  ALL_PARTS,
+                  'Full Exam — All Parts (1–7)',
+                  'A complete Listening & Reading exam. Press Play to hear each listening item, answer every set, then receive your score and a full error review at the end.',
+                  'exam'
+                )
+              )
+            }
+            onListeningExam={() =>
+              startSession(
+                buildExam(
+                  LISTENING_PARTS,
+                  'Listening Test — Parts 1–4',
+                  'Audio is played aloud in the assigned accent. Listen, then answer. Your score and errors appear at the end.',
+                  'exam-listening'
+                )
+              )
+            }
+            onReadingExam={() =>
+              startSession(
+                buildExam(
+                  READING_PARTS,
+                  'Reading Test — Parts 5–7',
+                  'Incomplete sentences, text completion, and single/double/triple passages. Your score and errors appear at the end.',
+                  'exam-reading'
+                )
+              )
+            }
             onTargeted={() => setView('section')}
             onPacing={() => setView('pacing')}
-            aiEnabled={aiConfig.enabled}
-            onOpenAi={() => setAiSettingsOpen(true)}
           />
         )}
 
@@ -92,7 +100,6 @@ export default function App() {
           <SectionSelect
             partMeta={PART_META}
             questionBank={questionBank}
-            aiConfig={aiConfig}
             onBack={goMenu}
             onStart={startSession}
           />
@@ -102,7 +109,6 @@ export default function App() {
           <PacingModule
             partMeta={PART_META}
             questionBank={questionBank}
-            aiConfig={aiConfig}
             onBack={goMenu}
             onStart={startSession}
           />
@@ -116,32 +122,10 @@ export default function App() {
           <Results
             results={lastResults}
             onMenu={goMenu}
-            onRetry={() => {
-              if (session) {
-                setView('quiz');
-              } else {
-                goMenu();
-              }
-            }}
+            onRetry={() => (session ? setView('quiz') : goMenu())}
           />
         )}
       </main>
-
-      {aiSettingsOpen && (
-        <AISettings
-          config={aiConfig}
-          onClose={() => setAiSettingsOpen(false)}
-          onSave={(next) => {
-            setAiConfig(next);
-            if (typeof localStorage !== 'undefined') {
-              if (next.apiKey) localStorage.setItem('toeic_ai_key', next.apiKey);
-              else localStorage.removeItem('toeic_ai_key');
-              localStorage.setItem('toeic_ai_model', next.model);
-            }
-            setAiSettingsOpen(false);
-          }}
-        />
-      )}
 
       <footer className="app-footer">
         <span>TOEIC Mastery Simulator</span>

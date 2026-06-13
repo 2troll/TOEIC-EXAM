@@ -6,11 +6,8 @@ const ASCII = String.raw`
   |_|  \____/ \____/___\____|
 `;
 
-/**
- * Professional header for the simulator. Shows the ASCII banner, a Home action,
- * and an AI Mode indicator/toggle entry point.
- */
-export default function Banner({ onHome, onOpenAi, aiEnabled }) {
+/** Professional header for the simulator. */
+export default function Banner({ onHome }) {
   return (
     <header className="banner">
       <div className="banner-inner">
@@ -23,14 +20,6 @@ export default function Banner({ onHome, onOpenAi, aiEnabled }) {
         </button>
 
         <div className="banner-actions">
-          <button
-            className={`pill ${aiEnabled ? 'pill-on' : ''}`}
-            onClick={onOpenAi}
-            title="Configure optional AI question generation"
-          >
-            <span className="pill-dot" />
-            AI Mode: {aiEnabled ? 'ON' : 'OFF'}
-          </button>
           <button className="btn-ghost" onClick={onHome}>
             Main Menu
           </button>

@@ -1,23 +1,17 @@
-import { useState } from 'react';
 import { SPEED_HACKS, PACING_TARGETS } from '../data/strategies.js';
-import { generateBlocks } from '../ai/generate.js';
 
 /**
  * Pacing & Speed-Hack Drill module: a strategy reference plus timed drills.
- * Drills attach a per-question target (e.g. 15s for Part 5) so the quiz engine
- * displays a live countdown and flags over-target answers.
+ * Drills attach a per-question target so the quiz engine shows a live countdown.
  */
-export default function PacingModule({ partMeta, questionBank, aiConfig, onBack, onStart }) {
-  const [busy, setBusy] = useState(null);
-  const [error, setError] = useState('');
-
+export default function PacingModule({ partMeta, questionBank, onBack, onStart }) {
   const drills = [
     { part: 5, target: PACING_TARGETS.part5 },
     { part: 6, target: PACING_TARGETS.part6 },
     { part: 7, target: PACING_TARGETS.part7 },
   ];
 
-  function startBuiltIn(part, target) {
+  function startDrill(part, target) {
     const blocks = (questionBank[part] || []).map((b) => ({ ...b, part }));
     onStart({
       title: `Pacing Drill — ${partMeta[part].short}`,
@@ -29,32 +23,6 @@ export default function PacingModule({ partMeta, questionBank, aiConfig, onBack,
     });
   }
 
-  async function startAi(part, target) {
-    setError('');
-    setBusy(part);
-    try {
-      const generated = await generateBlocks({
-        apiKey: aiConfig.apiKey,
-        model: aiConfig.model,
-        part,
-        count: part === 5 ? 5 : 2,
-      });
-      const blocks = generated.map((b) => ({ ...b, part }));
-      onStart({
-        title: `Pacing Drill — ${partMeta[part].short} (AI)`,
-        subtitle: `Target: ${target.label}.`,
-        mode: 'pacing-ai',
-        pacing: true,
-        target: target.seconds,
-        blocks,
-      });
-    } catch (err) {
-      setError(err.message || 'AI generation failed.');
-    } finally {
-      setBusy(null);
-    }
-  }
-
   return (
     <section className="pacing-module">
       <div className="view-head">
@@ -63,8 +31,6 @@ export default function PacingModule({ partMeta, questionBank, aiConfig, onBack,
         </button>
         <h2>Pacing &amp; Speed-Hack Drill</h2>
       </div>
-
-      {error && <div className="alert-error">{error}</div>}
 
       <div className="pacing-grid">
         <div className="pacing-col">
@@ -81,22 +47,9 @@ export default function PacingModule({ partMeta, questionBank, aiConfig, onBack,
               </div>
               <p>{target.label}</p>
               <div className="part-card-actions">
-                <button
-                  className="btn-primary"
-                  onClick={() => startBuiltIn(part, target)}
-                  disabled={busy === part}
-                >
+                <button className="btn-primary" onClick={() => startDrill(part, target)}>
                   Start drill
                 </button>
-                {aiConfig.enabled && (
-                  <button
-                    className="btn-secondary"
-                    onClick={() => startAi(part, target)}
-                    disabled={busy === part}
-                  >
-                    {busy === part ? 'Generating…' : 'AI drill'}
-                  </button>
-                )}
               </div>
             </div>
           ))}

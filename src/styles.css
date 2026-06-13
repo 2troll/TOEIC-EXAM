@@ -502,12 +502,36 @@ button {
 .audio-hint {
   font-size: 0.78rem;
   color: #9fb1c6;
-  margin: 0;
+  margin: 8px 0 0;
 }
-.audio-hidden {
-  font-style: italic;
+.audio-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.btn-play {
+  background: var(--gold) !important;
+  color: #2a2208 !important;
+  border-color: var(--gold) !important;
+  font-weight: 700;
+}
+.audio-playing {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+.audio-fallback-note {
+  font-size: 0.76rem;
   color: #9fb1c6;
-  padding: 16px 0 4px;
+}
+.module-card-feature {
+  border-color: var(--gold);
+  background: linear-gradient(180deg, #fffdf6, #ffffff);
+}
+.module-card-feature .module-index {
+  background: var(--gold);
+  color: #2a2208;
 }
 .photo-frame {
   background: rgba(255, 255, 255, 0.06);

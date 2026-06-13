@@ -12,25 +12,32 @@ English, in keeping with the real exam experience.
 
 ## Features
 
-### Three core modules (Main Menu)
+### Exams & modules (Main Menu)
 
-1. **Full Simulation Diagnostic** — a timed cross-section spanning all seven
-   parts (Listening 1–4, Reading 5–7) to establish a baseline.
-2. **Targeted Section Practice** — drill any single part in small, manageable
+1. **Full Exam** — a complete test across all seven parts (Listening 1–4,
+   Reading 5–7), the closest to the real exam experience.
+2. **Listening Test** — Parts 1–4 with **spoken audio** (see below).
+3. **Reading Test** — Parts 5–7.
+4. **Targeted Section Practice** — drill any single part in small, manageable
    blocks (≈5 questions per set; conversations/talks/passages presented whole).
-3. **Pacing & Speed-Hack Drill** — timed drills with per-question target
+5. **Pacing & Speed-Hack Drill** — timed drills with per-question target
    countdowns, plus an expandable **Speed-Hack Reference** that teaches
    grammar/vocabulary categorization (Parts 5–6) and keyword-first skimming
    (Part 7).
 
+Every exam ends with a **score** and a full **error review**.
+
 ### Authentic exam mechanics
 
-- **Listening (Parts 1–4)** are rendered as an audio-playback system:
-  the script appears inside an `[AUDIO SCRIPT / DESIGNATED ACCENT: …]` frame.
-  Read it once, then **hide it** to answer from memory — simulating the single
-  audio play and training auditory retention. Items embed real TOEIC audio
-  distractors (homophones, repeated words used out of context, misleading
-  statements).
+- **Listening (Parts 1–4)** play **real spoken audio**. The simulator reads each
+  script aloud in its assigned accent (American / British / Australian /
+  Canadian) using the device's built-in voices (Web Speech API); two-speaker
+  conversations alternate male/female voices. Press **▶ Play audio**, listen,
+  then answer — the **transcript stays hidden** (revealable for study), as on
+  the real test. Items embed authentic audio distractors (homophones, repeated
+  words used out of context, misleading statements).
+  *Note: the original ETS recordings are copyrighted and not included; the app
+  generates the spoken audio on the device.*
 - **Reading (Parts 5–7)** include incomplete sentences, text completion (with a
   sentence-insertion blank), and single / double / **triple** passages
   (emails, memos, advertisements, web pages) with cross-reference questions.
@@ -53,26 +60,6 @@ breakdowns, total time, pacing-target compliance, and a full item review.
 
 ---
 
-## AI Mode (optional, hybrid)
-
-The simulator ships with a curated, ready-to-use question bank — **no setup
-required**. Optionally, enable **AI Mode** to generate unlimited fresh,
-exam-standard items on demand using the Claude API.
-
-- Click **AI Mode** in the header, paste your **Anthropic API key**, choose a
-  model (default **Claude Opus 4.8**), and enable it.
-- Generated items follow the simulator's internal schema and flow through the
-  exact same quiz + 3-tier feedback components as the built-in bank.
-- The key is stored only on your device (in-memory + optional `localStorage`)
-  and is sent directly from the browser to the Anthropic API via the
-  `anthropic-dangerous-direct-browser-access` header.
-
-> ⚠️ Browser-direct API access exposes the key to client-side code. For shared
-> or production deployments, route generation through a backend instead of
-> entering a key in the browser.
-
----
-
 ## Getting started
 
 ```bash
@@ -88,8 +75,8 @@ npm run bundle   # build + inline into ONE self-contained HTML file
 `npm run bundle` produces **`dist/toeic-mastery-simulator.html`** — a single
 self-contained file with all CSS and JavaScript inlined and no external
 references. Copy it to a phone (AirDrop, cloud drive, email) and open it in any
-mobile browser; it runs fully offline. AI Mode remains optional and only
-activates if you enter your own Anthropic API key.
+mobile browser; it runs fully offline. (Spoken audio uses the device's built-in
+voices, so it needs a device with text-to-speech available.)
 
 The build sets `base: './'`, so `dist/` can be served from any sub-path
 (e.g. GitHub Pages project sites) with no extra configuration.
@@ -106,19 +93,19 @@ src/
   data/
     questionBank.js        Curated TOEIC items (Parts 1–7) + 3-tier feedback
     strategies.js          Speed-hack reference & pacing targets
-  ai/
-    generate.js            Optional Claude API question generation
+  audio/
+    speech.js              Text-to-speech engine for listening audio
   components/
-    Banner.jsx             Header / ASCII banner / AI Mode entry
-    MainMenu.jsx           Three core modules
+    Banner.jsx             Header / ASCII banner
+    MainMenu.jsx           Full Exam, Listening/Reading tests, practice, pacing
     SectionSelect.jsx      Targeted Section Practice picker
     PacingModule.jsx       Timed drills + Speed-Hack Reference
     QuizSession.jsx        Quiz engine (sets, timing, grading)
-    Stimulus.jsx           Audio-script / passage / sentence rendering
+    Stimulus.jsx           Passage / sentence rendering
+    AudioPlayer.jsx        Spoken-audio player for listening parts
     FeedbackPanel.jsx      The 3-tier feedback display
     Timer.jsx              Count-up timer with pacing target
     Results.jsx            Performance report
-    AISettings.jsx         AI Mode configuration modal
 ```
 
 ---
