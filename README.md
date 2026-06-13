@@ -80,7 +80,16 @@ npm install      # install dependencies
 npm run dev      # start the dev server (http://localhost:5173)
 npm run build    # production build to dist/
 npm run preview  # preview the production build
+npm run bundle   # build + inline into ONE self-contained HTML file
 ```
+
+### Single-file build (open on a phone, offline)
+
+`npm run bundle` produces **`dist/toeic-mastery-simulator.html`** — a single
+self-contained file with all CSS and JavaScript inlined and no external
+references. Copy it to a phone (AirDrop, cloud drive, email) and open it in any
+mobile browser; it runs fully offline. AI Mode remains optional and only
+activates if you enter your own Anthropic API key.
 
 The build sets `base: './'`, so `dist/` can be served from any sub-path
 (e.g. GitHub Pages project sites) with no extra configuration.
