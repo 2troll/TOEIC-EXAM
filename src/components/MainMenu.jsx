@@ -11,6 +11,7 @@ export default function MainMenu({
   onReviewMistakes,
   onProgress,
   onPlan,
+  onVocab,
   progress,
   feedbackMode,
   onSetFeedbackMode,
@@ -123,6 +124,13 @@ export default function MainMenu({
           <h3>30-Day Study Plan</h3>
           <p>A guided day-by-day plan with one-tap practice — the fastest path to exam-ready.</p>
           <span className="module-go">Open the plan →</span>
+        </button>
+
+        <button className="module-card" onClick={onVocab}>
+          <div className="module-index">🗂️</div>
+          <h3>Vocabulary Trainer</h3>
+          <p>Flashcards of high-frequency TOEIC business words, with self-paced review.</p>
+          <span className="module-go">Train vocabulary →</span>
         </button>
       </div>
     </section>

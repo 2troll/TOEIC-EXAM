@@ -145,3 +145,35 @@ export function clearPlan() {
     /* ignore */
   }
 }
+
+// ── Vocabulary trainer (known words) ───────────────────────
+const VOCAB_KEY = 'toeic_vocab_v1';
+
+export function loadVocabKnown() {
+  if (typeof localStorage === 'undefined') return {};
+  try {
+    return JSON.parse(localStorage.getItem(VOCAB_KEY)) || {};
+  } catch {
+    return {};
+  }
+}
+
+export function setVocabKnown(word, known) {
+  const k = loadVocabKnown();
+  if (known) k[word] = true;
+  else delete k[word];
+  try {
+    localStorage.setItem(VOCAB_KEY, JSON.stringify(k));
+  } catch {
+    /* ignore */
+  }
+  return k;
+}
+
+export function clearVocab() {
+  try {
+    localStorage.removeItem(VOCAB_KEY);
+  } catch {
+    /* ignore */
+  }
+}

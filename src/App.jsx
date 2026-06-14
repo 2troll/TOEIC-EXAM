@@ -7,6 +7,7 @@ import QuizSession from './components/QuizSession.jsx';
 import Results from './components/Results.jsx';
 import Progress from './components/Progress.jsx';
 import StudyPlan from './components/StudyPlan.jsx';
+import Vocab from './components/Vocab.jsx';
 import { questionBank, PART_META } from './data/questionBank.js';
 import { PACING_TARGETS } from './data/strategies.js';
 import { loadProgress, recordResult, buildMissedSession } from './data/progress.js';
@@ -170,6 +171,7 @@ export default function App() {
             onReviewMistakes={startReview}
             onProgress={() => setView('progress')}
             onPlan={() => setView('plan')}
+            onVocab={() => setView('vocab')}
             progress={progress}
           />
         )}
@@ -177,6 +179,8 @@ export default function App() {
         {view === 'plan' && (
           <StudyPlan onBack={goMenu} onAction={startPlanAction} />
         )}
+
+        {view === 'vocab' && <Vocab onBack={goMenu} />}
 
         {view === 'progress' && (
           <Progress
