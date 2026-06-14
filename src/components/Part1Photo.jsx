@@ -195,24 +195,32 @@ const SCENES = {
   office: Phone,
 };
 
-// Search terms used to fetch a matching openly-licensed photo per scene.
+// Search terms per scene: a specific query plus a broader fallback, so most
+// scenes return a real photo instead of falling back to the illustration.
 const SCENE_QUERY = {
-  forklift: 'warehouse forklift boxes',
-  meeting: 'business presentation meeting chart',
-  cafe: 'cafe waiter serving coffee',
-  blueprints: 'construction engineers blueprint site',
-  phone: 'businesswoman office telephone desk',
-  van: 'delivery van loading boxes',
-  office: 'office worker desk computer',
+  forklift: ['warehouse forklift boxes', 'warehouse'],
+  meeting: ['business presentation meeting', 'business people office'],
+  cafe: ['cafe coffee people', 'coffee shop'],
+  blueprints: ['construction engineers site', 'construction site'],
+  phone: ['businesswoman office telephone', 'office desk'],
+  van: ['delivery van', 'delivery truck'],
+  office: ['office worker desk', 'office'],
 };
 
+function licenseLabel(code) {
+  const c = (code || '').toLowerCase();
+  if (c === 'cc0') return 'CC0';
+  if (c === 'pdm') return 'Public Domain';
+  return 'CC ' + c.toUpperCase();
+}
+
 async function fetchOpenversePhoto(query, signal) {
-  // license=cc0,pdm → only CC0 and Public Domain Mark (free to use, no
-  // attribution legally required, but we display credit as good practice).
+  // cc0,pdm → no attribution required; by (CC BY) → free to use with credit,
+  // which we always display. All allow commercial use and modification.
   const url =
     'https://api.openverse.org/v1/images/?q=' +
     encodeURIComponent(query) +
-    '&license=cc0,pdm&category=photograph&page_size=12';
+    '&license=cc0,pdm,by&category=photograph&page_size=12';
   const res = await fetch(url, { signal, headers: { Accept: 'application/json' } });
   if (!res.ok) throw new Error('openverse request failed');
   const data = await res.json();
@@ -221,7 +229,7 @@ async function fetchOpenversePhoto(query, signal) {
   return {
     url: hit.url,
     title: hit.title || 'Untitled',
-    license: (hit.license || 'cc0').toUpperCase(),
+    license: hit.license || 'cc0',
     licenseUrl: hit.license_url || 'https://creativecommons.org/publicdomain/zero/1.0/',
     landing: hit.foreign_landing_url || hit.url,
     creator: hit.creator || null,
@@ -236,15 +244,20 @@ export default function Part1Photo({ description }) {
   useEffect(() => {
     let active = true;
     const ctrl = new AbortController();
-    const timeout = setTimeout(() => ctrl.abort(), 8000);
-    fetchOpenversePhoto(SCENE_QUERY[scene] || description, ctrl.signal)
-      .then((p) => {
-        if (active) setPhoto(p);
-      })
-      .catch(() => {
-        /* offline / no result → keep the SVG illustration */
-      })
-      .finally(() => clearTimeout(timeout));
+    const timeout = setTimeout(() => ctrl.abort(), 9000);
+    const queries = SCENE_QUERY[scene] || [description];
+    (async () => {
+      for (const q of queries) {
+        try {
+          const p = await fetchOpenversePhoto(q, ctrl.signal);
+          if (active) setPhoto(p);
+          return;
+        } catch {
+          /* try the next (broader) query */
+        }
+      }
+      // every query failed → keep the SVG illustration
+    })().finally(() => clearTimeout(timeout));
     return () => {
       active = false;
       ctrl.abort();
@@ -275,7 +288,7 @@ export default function Part1Photo({ description }) {
             </a>
             {photo.creator ? ` by ${photo.creator}` : ''} ·{' '}
             <a href={photo.licenseUrl} target="_blank" rel="noreferrer">
-              {photo.license}
+              {licenseLabel(photo.license)}
             </a>{' '}
             via Openverse
           </span>
