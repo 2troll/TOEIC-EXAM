@@ -1,11 +1,12 @@
 /**
- * Original illustrations for Part 1 (Photographs).
+ * Illustrations / photos for Part 1 (Photographs).
  *
- * The real exam shows a photograph; copyrighted photos can't be reused, so each
- * Part 1 item is depicted with an original, inline SVG scene (fully owned, works
- * offline, embeds in the single-file build). The scene is inferred from the
- * item's description so students see a picture and answer from it.
+ * The real exam shows a photograph. To stay legal, real photos are pulled at
+ * runtime from Openverse filtered to CC0 / public-domain licenses (with credit
+ * shown). If that fails (offline, no result), an original inline-SVG scene is
+ * drawn instead — so the single-file offline build always shows something.
  */
+import { useEffect, useState } from 'react';
 
 function pickScene(description = '') {
   const d = description.toLowerCase();
@@ -194,12 +195,92 @@ const SCENES = {
   office: Phone,
 };
 
+// Search terms used to fetch a matching openly-licensed photo per scene.
+const SCENE_QUERY = {
+  forklift: 'warehouse forklift boxes',
+  meeting: 'business presentation meeting chart',
+  cafe: 'cafe waiter serving coffee',
+  blueprints: 'construction engineers blueprint site',
+  phone: 'businesswoman office telephone desk',
+  van: 'delivery van loading boxes',
+  office: 'office worker desk computer',
+};
+
+async function fetchOpenversePhoto(query, signal) {
+  // license=cc0,pdm → only CC0 and Public Domain Mark (free to use, no
+  // attribution legally required, but we display credit as good practice).
+  const url =
+    'https://api.openverse.org/v1/images/?q=' +
+    encodeURIComponent(query) +
+    '&license=cc0,pdm&category=photograph&page_size=12';
+  const res = await fetch(url, { signal, headers: { Accept: 'application/json' } });
+  if (!res.ok) throw new Error('openverse request failed');
+  const data = await res.json();
+  const hit = (data.results || []).find((r) => r.url);
+  if (!hit) throw new Error('no openly-licensed result');
+  return {
+    url: hit.url,
+    title: hit.title || 'Untitled',
+    license: (hit.license || 'cc0').toUpperCase(),
+    licenseUrl: hit.license_url || 'https://creativecommons.org/publicdomain/zero/1.0/',
+    landing: hit.foreign_landing_url || hit.url,
+    creator: hit.creator || null,
+  };
+}
+
 export default function Part1Photo({ description }) {
-  const Scene = SCENES[pickScene(description)] || Phone;
+  const scene = pickScene(description);
+  const Scene = SCENES[scene] || Phone;
+  const [photo, setPhoto] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+    const ctrl = new AbortController();
+    const timeout = setTimeout(() => ctrl.abort(), 8000);
+    fetchOpenversePhoto(SCENE_QUERY[scene] || description, ctrl.signal)
+      .then((p) => {
+        if (active) setPhoto(p);
+      })
+      .catch(() => {
+        /* offline / no result → keep the SVG illustration */
+      })
+      .finally(() => clearTimeout(timeout));
+    return () => {
+      active = false;
+      ctrl.abort();
+      clearTimeout(timeout);
+    };
+  }, [scene, description]);
+
   return (
     <figure className="p1-photo">
-      <Scene />
-      <figcaption className="p1-caption">{description}</figcaption>
+      {photo ? (
+        <img
+          className="p1-img"
+          src={photo.url}
+          alt={description}
+          loading="lazy"
+          onError={() => setPhoto(null)}
+        />
+      ) : (
+        <Scene />
+      )}
+      <figcaption className="p1-caption">
+        {description}
+        {photo && (
+          <span className="p1-credit">
+            {' '}— Photo:{' '}
+            <a href={photo.landing} target="_blank" rel="noreferrer">
+              {photo.title}
+            </a>
+            {photo.creator ? ` by ${photo.creator}` : ''} ·{' '}
+            <a href={photo.licenseUrl} target="_blank" rel="noreferrer">
+              {photo.license}
+            </a>{' '}
+            via Openverse
+          </span>
+        )}
+      </figcaption>
     </figure>
   );
 }
