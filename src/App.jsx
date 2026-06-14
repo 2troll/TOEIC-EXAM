@@ -6,7 +6,9 @@ import PacingModule from './components/PacingModule.jsx';
 import QuizSession from './components/QuizSession.jsx';
 import Results from './components/Results.jsx';
 import Progress from './components/Progress.jsx';
+import StudyPlan from './components/StudyPlan.jsx';
 import { questionBank, PART_META } from './data/questionBank.js';
+import { PACING_TARGETS } from './data/strategies.js';
 import { loadProgress, recordResult, buildMissedSession } from './data/progress.js';
 
 /**
@@ -60,6 +62,50 @@ export default function App() {
       setView('quiz');
     }
   }, []);
+
+  // Launch the practice a study-plan day points to.
+  const startPlanAction = useCallback(
+    (action) => {
+      if (!action) return;
+      if (action.type === 'review') {
+        startReview();
+        return;
+      }
+      if (action.type === 'part') {
+        const blocks = (questionBank[action.part] || []).map((b) => ({ ...b, part: action.part }));
+        startSession({
+          title: PART_META[action.part].title,
+          subtitle: PART_META[action.part].instructions,
+          mode: 'targeted',
+          blocks,
+        });
+        return;
+      }
+      if (action.type === 'pacing') {
+        const t = PACING_TARGETS['part' + action.part];
+        const blocks = (questionBank[action.part] || []).map((b) => ({ ...b, part: action.part }));
+        startSession({
+          title: `Pacing Drill — Part ${action.part}`,
+          subtitle: `Target: ${t.label}.`,
+          mode: 'pacing',
+          pacing: true,
+          target: t.seconds,
+          blocks,
+        });
+        return;
+      }
+      if (action.type === 'exam') {
+        const map = { full: ALL_PARTS, listening: LISTENING_PARTS, reading: READING_PARTS };
+        const parts = map[action.kind] || ALL_PARTS;
+        startSession({
+          ...buildExam(parts, `${action.kind[0].toUpperCase()}${action.kind.slice(1)} Exam`, '', 'exam'),
+          feedbackMode,
+          timed,
+        });
+      }
+    },
+    [startReview, startSession, feedbackMode, timed]
+  );
 
   const finishSession = useCallback(
     (results) => {
@@ -123,8 +169,13 @@ export default function App() {
             onPacing={() => setView('pacing')}
             onReviewMistakes={startReview}
             onProgress={() => setView('progress')}
+            onPlan={() => setView('plan')}
             progress={progress}
           />
+        )}
+
+        {view === 'plan' && (
+          <StudyPlan onBack={goMenu} onAction={startPlanAction} />
         )}
 
         {view === 'progress' && (

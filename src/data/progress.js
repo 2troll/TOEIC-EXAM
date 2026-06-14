@@ -113,3 +113,35 @@ export function buildMissedSession() {
 export function clearProgress() {
   save({ history: [], missed: {} });
 }
+
+// ── 30-day study plan completion tracking ──────────────────
+const PLAN_KEY = 'toeic_plan_v1';
+
+export function loadPlanDone() {
+  if (typeof localStorage === 'undefined') return {};
+  try {
+    return JSON.parse(localStorage.getItem(PLAN_KEY)) || {};
+  } catch {
+    return {};
+  }
+}
+
+export function setPlanDay(day, done) {
+  const d = loadPlanDone();
+  if (done) d[day] = true;
+  else delete d[day];
+  try {
+    localStorage.setItem(PLAN_KEY, JSON.stringify(d));
+  } catch {
+    /* ignore */
+  }
+  return d;
+}
+
+export function clearPlan() {
+  try {
+    localStorage.removeItem(PLAN_KEY);
+  } catch {
+    /* ignore */
+  }
+}

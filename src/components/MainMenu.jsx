@@ -10,6 +10,7 @@ export default function MainMenu({
   onPacing,
   onReviewMistakes,
   onProgress,
+  onPlan,
   progress,
   feedbackMode,
   onSetFeedbackMode,
@@ -115,6 +116,13 @@ export default function MainMenu({
           <h3>Pacing &amp; Speed-Hack Drill</h3>
           <p>Timed drills with per-question target countdowns and a speed-hack strategy reference.</p>
           <span className="module-go">Open drills →</span>
+        </button>
+
+        <button className="module-card" onClick={onPlan}>
+          <div className="module-index">📅</div>
+          <h3>30-Day Study Plan</h3>
+          <p>A guided day-by-day plan with one-tap practice — the fastest path to exam-ready.</p>
+          <span className="module-go">Open the plan →</span>
         </button>
       </div>
     </section>
