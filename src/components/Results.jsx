@@ -1,4 +1,5 @@
 import { PART_META } from '../data/questionBank.js';
+import { estimateScore } from '../data/progress.js';
 
 function fmt(total) {
   const m = Math.floor(total / 60);
@@ -24,6 +25,7 @@ export default function Results({ results, onMenu, onRetry }) {
 
   const targetBudget = pacing ? target * total : null;
   const onPace = pacing ? totalSeconds <= targetBudget : null;
+  const est = estimateScore(perSection);
 
   return (
     <section className="results">
@@ -41,6 +43,18 @@ export default function Results({ results, onMenu, onRetry }) {
         </div>
         <div className="score-meta">
           <div className={`score-band ${b.tone}`}>{b.label}</div>
+          {est.total != null && (
+            <div className="est-score">
+              Estimated TOEIC score: <strong>~{est.total}</strong>
+              <span className="est-range"> / 990</span>
+              {est.listening != null && est.reading != null && (
+                <span className="est-split">
+                  {' '}(Listening ~{est.listening} · Reading ~{est.reading})
+                </span>
+              )}
+              <div className="est-note">Approximate estimate, not an official score.</div>
+            </div>
+          )}
           <div className="score-time">Total time: {fmt(totalSeconds)}</div>
           {pacing && (
             <div className={`score-pace ${onPace ? 'pace-ok' : 'pace-bad'}`}>

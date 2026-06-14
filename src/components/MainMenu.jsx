@@ -8,7 +8,14 @@ export default function MainMenu({
   onReadingExam,
   onTargeted,
   onPacing,
+  onReviewMistakes,
+  onProgress,
+  progress,
 }) {
+  const history = progress?.history || [];
+  const missedN = Object.keys(progress?.missed || {}).length;
+  const bestTotal = history.reduce((m, h) => Math.max(m, h.est?.total || 0), 0);
+
   return (
     <section className="menu">
       <div className="menu-intro">
@@ -16,10 +23,33 @@ export default function MainMenu({
         <p>
           Take a complete practice exam from start to finish. In the Listening parts, press{' '}
           <strong>▶ Play audio</strong> to hear each item in its assigned accent, then answer. At
-          the end you receive your <strong>score</strong> and a full <strong>error review</strong>{' '}
-          with the 3-tier professional feedback on every question.
+          the end you receive your <strong>score</strong>, an <strong>estimated TOEIC score</strong>,
+          and a full <strong>error review</strong> with 3-tier feedback on every question.
         </p>
       </div>
+
+      {(history.length > 0 || missedN > 0) && (
+        <div className="progress-strip">
+          <div className="progress-stat">
+            <span className="ps-num">{bestTotal || '—'}</span>
+            <span className="ps-label">Best est. score</span>
+          </div>
+          <div className="progress-stat">
+            <span className="ps-num">{history.length}</span>
+            <span className="ps-label">Sessions</span>
+          </div>
+          <div className="progress-actions">
+            {missedN > 0 && (
+              <button className="btn-secondary" onClick={onReviewMistakes}>
+                Review my mistakes ({missedN})
+              </button>
+            )}
+            <button className="btn-ghost dark" onClick={onProgress}>
+              My progress
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="card-grid">
         <button className="module-card module-card-feature" onClick={onFullExam}>

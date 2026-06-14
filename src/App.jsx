@@ -5,7 +5,9 @@ import SectionSelect from './components/SectionSelect.jsx';
 import PacingModule from './components/PacingModule.jsx';
 import QuizSession from './components/QuizSession.jsx';
 import Results from './components/Results.jsx';
+import Progress from './components/Progress.jsx';
 import { questionBank, PART_META } from './data/questionBank.js';
+import { loadProgress, recordResult, buildMissedSession } from './data/progress.js';
 
 /**
  * Top-level state machine for the TOEIC Mastery Simulator.
@@ -35,6 +37,7 @@ export default function App() {
   const [view, setView] = useState('menu');
   const [session, setSession] = useState(null);
   const [lastResults, setLastResults] = useState(null);
+  const [progress, setProgress] = useState(() => loadProgress());
 
   const goMenu = useCallback(() => {
     setView('menu');
@@ -46,9 +49,20 @@ export default function App() {
     setView('quiz');
   }, []);
 
+  const startReview = useCallback(() => {
+    const built = buildMissedSession();
+    if (built) {
+      setSession(built);
+      setView('quiz');
+    }
+  }, []);
+
   const finishSession = useCallback(
     (results) => {
-      setLastResults({ ...results, sessionTitle: session?.title || 'Practice Session' });
+      const enriched = { ...results, sessionTitle: session?.title || 'Practice Session' };
+      recordResult(enriched); // persist score + missed questions
+      setProgress(loadProgress());
+      setLastResults(enriched);
       setView('results');
     },
     [session]
@@ -93,6 +107,18 @@ export default function App() {
             }
             onTargeted={() => setView('section')}
             onPacing={() => setView('pacing')}
+            onReviewMistakes={startReview}
+            onProgress={() => setView('progress')}
+            progress={progress}
+          />
+        )}
+
+        {view === 'progress' && (
+          <Progress
+            progress={progress}
+            onBack={goMenu}
+            onReview={startReview}
+            onCleared={() => setProgress(loadProgress())}
           />
         )}
 

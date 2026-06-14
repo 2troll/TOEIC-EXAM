@@ -106,6 +106,7 @@ export default function QuizSession({ session, onExit, onComplete }) {
         if (isCorrect) perSection[section].correct += 1;
 
         review.push({
+          id: q.id,
           part: block.part,
           prompt: q.prompt,
           chosen,
