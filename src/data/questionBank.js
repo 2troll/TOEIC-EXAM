@@ -1699,14 +1699,577 @@ const extraPart7 = [
   },
 ];
 
+// ─────────────────────────────────────────────────────────────────────────
+// EXTRA ORIGINAL CONTENT — BATCH 2 (more practice, all original)
+// ─────────────────────────────────────────────────────────────────────────
+const extra2Part1 = [
+  {
+    id: 'p1-005',
+    stimulus: {
+      kind: 'photo',
+      accent: 'Canadian',
+      photoDescription:
+        'A woman in business attire sits at a desk in an open-plan office, holding a telephone receiver to her ear while looking at a printed document. A laptop and a coffee mug are on the desk.',
+      audioScript:
+        '(A) She is typing on a laptop.\n(B) She is speaking on the telephone.\n(C) She is pouring a cup of coffee.\n(D) She is filing documents in a cabinet.',
+    },
+    questions: [
+      {
+        id: 'p1-005-q1',
+        prompt: 'Select the statement that best describes the photograph.',
+        options: [
+          '(A) She is typing on a laptop.',
+          '(B) She is speaking on the telephone.',
+          '(C) She is pouring a cup of coffee.',
+          '(D) She is filing documents in a cabinet.',
+        ],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) is correct: "is speaking on the telephone" matches the woman holding the receiver to her ear.',
+          distractors:
+            '(A) the laptop is present but she is not typing on it. (C) a mug is present but she is not pouring. (D) she holds a document but is not filing it in a cabinet. Each uses a visible object with the wrong action.',
+          timeHack:
+            'Match the VERB to the action. Objects in the photo (laptop, mug, document) are bait when paired with an action that is not happening.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p1-006',
+    stimulus: {
+      kind: 'photo',
+      accent: 'Australian',
+      photoDescription:
+        'Two workers in uniforms are loading cardboard boxes from a wheeled trolley into the back of a delivery van parked at a loading dock.',
+      audioScript:
+        '(A) A van is being loaded with boxes.\n(B) The workers are unloading a ship.\n(C) A trolley is being repaired.\n(D) The van is being washed.',
+    },
+    questions: [
+      {
+        id: 'p1-006-q1',
+        prompt: 'Select the statement that best describes the photograph.',
+        options: [
+          '(A) A van is being loaded with boxes.',
+          '(B) The workers are unloading a ship.',
+          '(C) A trolley is being repaired.',
+          '(D) The van is being washed.',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "A van is being loaded with boxes" accurately describes the workers placing boxes into the van.',
+          distractors:
+            '(B) "unloading a ship" — there is no ship, and they are loading, not unloading. (C) the trolley is in use, not being repaired. (D) the van is not being washed.',
+          timeHack:
+            'Passive "is being + p.p." is correct here only because people are clearly performing the action. Verify both the object (van/boxes) and the action (loading) against the image.',
+        },
+      },
+    ],
+  },
+];
+
+const extra2Part2 = [
+  {
+    id: 'p2-009',
+    stimulus: {
+      kind: 'qr',
+      accent: 'American',
+      audioScript:
+        "Where can I find the conference schedule?\n(A) It's posted on the bulletin board near the entrance.\n(B) At nine o'clock.\n(C) Yes, I attended last year.",
+    },
+    questions: [
+      {
+        id: 'p2-009-q1',
+        prompt: 'Choose the best response to the question.',
+        options: [
+          "(A) It's posted on the bulletin board near the entrance.",
+          "(B) At nine o'clock.",
+          '(C) Yes, I attended last year.',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "Where" asks for a location, and "on the bulletin board near the entrance" gives one.',
+          distractors:
+            '(B) gives a time (answers "When"). (C) is a Yes/No answer, impossible for a "Where" question, and echoes "conference/attended."',
+          timeHack:
+            '"Where" → a place. Eliminate time answers and Yes/No answers immediately.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p2-010',
+    stimulus: {
+      kind: 'qr',
+      accent: 'British',
+      audioScript:
+        "Have you finished reviewing the quarterly report?\n(A) Not yet, but I'll have it done by this afternoon.\n(B) The quarter is just over there.\n(C) On the top shelf.",
+    },
+    questions: [
+      {
+        id: 'p2-010-q1',
+        prompt: 'Choose the best response to the question.',
+        options: [
+          "(A) Not yet, but I'll have it done by this afternoon.",
+          '(B) The quarter is just over there.',
+          '(C) On the top shelf.',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: the Yes/No question "Have you finished…?" is answered naturally with "Not yet" plus a relevant follow-up.',
+          distractors:
+            '(B) plays on "quarterly / quarter" (a similar-word trap) and is meaningless here. (C) "On the top shelf" answers "Where," not whether the task is done.',
+          timeHack:
+            '"Have you…?" expects Yes/No (often softened to "Not yet"). Distrust options that repeat a root word (quarter) with a different meaning.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p2-011',
+    stimulus: {
+      kind: 'qr',
+      accent: 'Canadian',
+      audioScript:
+        'Should I email the client or call them directly?\n(A) A direct call would be faster for an urgent issue.\n(B) Yes, the email was quite long.\n(C) She is a new client.',
+    },
+    questions: [
+      {
+        id: 'p2-011-q1',
+        prompt: 'Choose the best response to the question.',
+        options: [
+          '(A) A direct call would be faster for an urgent issue.',
+          '(B) Yes, the email was quite long.',
+          '(C) She is a new client.',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: this is an "A or B" choice ("email… or call"), and "a direct call would be faster" selects one option with a reason.',
+          distractors:
+            '(B) is a Yes/No answer, which an "or" question rejects, and echoes "email." (C) "She is a new client" repeats "client" but does not pick a method.',
+          timeHack:
+            'For "X or Y" questions, choose the option that selects X or Y. Ignore Yes/No answers and word-echo distractors (email, client).',
+        },
+      },
+    ],
+  },
+];
+
+const extra2Part3 = [
+  {
+    id: 'p3-004',
+    stimulus: {
+      kind: 'conversation',
+      accent: 'American / Canadian',
+      audioScript:
+        "M: Hi, I'm calling to arrange travel for our sales director to the Chicago trade show next month.\n" +
+        'W: Of course. Would she prefer a morning or an evening flight on the fifteenth?\n' +
+        'M: Morning, if possible — she has a client dinner that evening. And she will need a hotel within walking distance of the convention center.\n' +
+        "W: I can book the seven a.m. flight and reserve a room at the Lakeside Inn, just two blocks away. I'll email you the itinerary to confirm.",
+    },
+    questions: [
+      {
+        id: 'p3-004-q1',
+        prompt: 'What is the man arranging?',
+        options: [
+          '(A) A business trip',
+          '(B) A client dinner',
+          '(C) A product demonstration',
+          '(D) A job interview',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "I\'m calling to arrange travel for our sales director to the Chicago trade show" — he is arranging a business trip.',
+          distractors:
+            '(B) the client dinner is mentioned only as a reason for the flight time. (C) and (D) are never discussed.',
+          timeHack:
+            'The caller\'s opening line states the purpose ("arrange travel… to the trade show"). Answer the gist from the first sentence.',
+        },
+      },
+      {
+        id: 'p3-004-q2',
+        prompt: 'Why does the man request a morning flight?',
+        options: [
+          '(A) It is less expensive.',
+          '(B) The director has a dinner that evening.',
+          '(C) The afternoon flights are full.',
+          '(D) The trade show starts early.',
+        ],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) is correct: "Morning, if possible — she has a client dinner that evening."',
+          distractors:
+            '(A) price, (C) full flights, and (D) an early start are not stated. The reason given is the evening dinner.',
+          timeHack:
+            'For "Why," find the reason the speaker states next to the request ("Morning… — she has a dinner that evening").',
+        },
+      },
+      {
+        id: 'p3-004-q3',
+        prompt: 'What does the woman say she will do next?',
+        options: [
+          '(A) Cancel a reservation',
+          '(B) Email the itinerary',
+          '(C) Call the convention center',
+          '(D) Reschedule the trade show',
+        ],
+        answer: 1,
+        feedback: {
+          correct:
+            "(B) is correct: \"I'll email you the itinerary to confirm.\"",
+          distractors:
+            '(A), (C), and (D) — no cancellation, call to the center, or rescheduling is mentioned.',
+          timeHack:
+            '"What will she do next?" → the final line\'s future-tense verb ("I\'ll email…").',
+        },
+      },
+    ],
+  },
+];
+
+const extra2Part4 = [
+  {
+    id: 'p4-004',
+    stimulus: {
+      kind: 'talk',
+      accent: 'British',
+      audioScript:
+        'Good afternoon, and welcome to the annual Regional Marketing Summit. Before our keynote begins, a few quick reminders. ' +
+        'The afternoon breakout sessions have been moved from the second floor to the third floor due to a scheduling conflict. ' +
+        'Lunch will be served in the main atrium at half past twelve. ' +
+        "And please remember to complete the feedback survey in your welcome packet — attendees who submit it will be entered into a draw for a free pass to next year's summit.",
+    },
+    questions: [
+      {
+        id: 'p4-004-q1',
+        prompt: 'Where is the announcement most likely taking place?',
+        options: [
+          '(A) At a marketing conference',
+          '(B) In a department store',
+          '(C) On a train',
+          '(D) At an airport',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "welcome to the annual Regional Marketing Summit" and references to a keynote and breakout sessions indicate a conference.',
+          distractors:
+            '(B), (C), (D) — a store, train, and airport do not fit the summit/keynote context.',
+          timeHack:
+            'Setting questions are answered by the greeting. "Marketing Summit… keynote… breakout sessions" → a conference.',
+        },
+      },
+      {
+        id: 'p4-004-q2',
+        prompt: 'What change does the speaker mention?',
+        options: [
+          '(A) The keynote was cancelled.',
+          '(B) Breakout sessions moved to the third floor.',
+          '(C) Lunch was delayed.',
+          '(D) The venue changed.',
+        ],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) is correct: "The afternoon breakout sessions have been moved from the second floor to the third floor."',
+          distractors:
+            '(A) the keynote is about to begin, not cancelled. (C) lunch is on schedule (12:30). (D) the venue is unchanged.',
+          timeHack:
+            'Listen for the change verb ("have been moved") and capture the new location (third floor).',
+        },
+      },
+      {
+        id: 'p4-004-q3',
+        prompt: 'How can attendees enter a prize draw?',
+        options: [
+          '(A) By arriving early',
+          '(B) By submitting the feedback survey',
+          '(C) By visiting a booth',
+          '(D) By referring a colleague',
+        ],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) is correct: "attendees who submit it [the feedback survey] will be entered into a draw."',
+          distractors:
+            '(A), (C), and (D) — arriving early, visiting a booth, and referrals are not mentioned.',
+          timeHack:
+            'Prize/offer questions hinge on a conditional clause ("attendees who submit it will be entered"). Match the action in that clause.',
+        },
+      },
+    ],
+  },
+];
+
+const extra2Part5 = [
+  {
+    id: 'p5-016',
+    stimulus: { kind: 'sentence', drillType: 'Grammar (quantifier)' },
+    questions: [
+      {
+        id: 'p5-016-q1',
+        prompt:
+          'The manager asked for ______ information about the delayed order before responding to the customer.',
+        options: ['(A) many', '(B) a few', '(C) more', '(D) fewer'],
+        answer: 2,
+        feedback: {
+          correct:
+            '(C) "more" is correct: "information" is an uncountable noun, and "more" works with uncountable nouns ("more information").',
+          distractors:
+            '(A) "many," (B) "a few," and (D) "fewer" are used with countable plural nouns, but "information" is uncountable.',
+          timeHack:
+            'GRAMMAR item: check if the noun is countable. Uncountable (information, equipment, advice) → use more/much/less, not many/few/fewer.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p5-017',
+    stimulus: { kind: 'sentence', drillType: 'Vocabulary (verb collocation)' },
+    questions: [
+      {
+        id: 'p5-017-q1',
+        prompt:
+          "Because of the company's rapid expansion, the HR team is struggling to ______ enough qualified candidates.",
+        options: ['(A) recruit', '(B) require', '(C) recall', '(D) reduce'],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) "recruit" is correct: HR teams "recruit candidates" — a standard collocation meaning to find and hire people.',
+          distractors:
+            '(B) "require" means to need. (C) "recall" means to remember or call back. (D) "reduce" means to lessen. All begin with "re-" but do not collocate with "candidates" here.',
+          timeHack:
+            'VOCABULARY item: HR + "candidates" → "recruit." Reject the look-alike "re-" verbs that do not fit the collocation.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p5-018',
+    stimulus: { kind: 'sentence', drillType: 'Grammar (passive voice)' },
+    questions: [
+      {
+        id: 'p5-018-q1',
+        prompt:
+          'The annual financial report ______ by an independent auditor before it is presented to shareholders.',
+        options: ['(A) reviews', '(B) is reviewed', '(C) reviewing', '(D) has reviewing'],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) "is reviewed" is correct: the report receives the action (it does not review anything), so the passive "is reviewed by…" is required.',
+          distractors:
+            '(A) "reviews" is active and would mean the report reviews something. (C) "reviewing" and (D) "has reviewing" are not valid passive forms.',
+          timeHack:
+            'GRAMMAR item: subject + ______ + "by [doer]" → passive ("is/are + past participle"). The word "by" is the giveaway.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p5-019',
+    stimulus: { kind: 'sentence', drillType: 'Grammar (preposition)' },
+    questions: [
+      {
+        id: 'p5-019-q1',
+        prompt: 'The store will remain open ______ 9:00 p.m. during the holiday season.',
+        options: ['(A) until', '(B) by', '(C) since', '(D) for'],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) "until" is correct: "remain open" is a continuous state lasting up to a point in time, which "until" expresses ("open until 9 p.m.").',
+          distractors:
+            '(B) "by" marks a deadline for a single action, not a duration. (C) "since" needs a past starting point. (D) "for" needs a length of time, not a clock time.',
+          timeHack:
+            'GRAMMAR item: continuous state up to a time point → "until." Compare with "by" (deadline) — choose by the verb type (remain = duration).',
+        },
+      },
+    ],
+  },
+];
+
+const extra2Part6 = [
+  {
+    id: 'p6-003',
+    stimulus: {
+      kind: 'passage',
+      passages: [
+        {
+          type: 'Email',
+          heading:
+            'To: All Staff — From: Human Resources — Subject: New Flexible Work Arrangement',
+          text:
+            'We are pleased to announce a new flexible work policy that will take effect on the first of next month. Employees may now choose to work from home up to two days per week, [1] their manager approves the schedule in advance.\n\n' +
+            'To request a remote-work arrangement, please complete the form on the company intranet. [2] Once submitted, your request will be reviewed within five business days. We believe this change will improve work-life balance and [3] productivity. If you have any questions about how the policy [4] you, please contact your HR representative.',
+        },
+      ],
+    },
+    questions: [
+      {
+        id: 'p6-003-q1',
+        prompt: 'Blank [1]',
+        options: ['(A) provided that', '(B) despite', '(C) in addition to', '(D) such as'],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) "provided that" is correct: it is a conjunction meaning "only if," correctly introducing the condition clause "their manager approves the schedule."',
+          distractors:
+            '(B) "despite" and (C) "in addition to" are prepositions that take a noun, not a clause. (D) "such as" introduces examples, not a condition.',
+          timeHack:
+            'GRAMMAR blank: a full clause follows → use a conjunction. "provided that" = "only if," which fits the approval condition.',
+        },
+      },
+      {
+        id: 'p6-003-q2',
+        prompt: 'Blank [2]',
+        options: [
+          '(A) The annual picnic will be held in July.',
+          '(B) Be sure to include your preferred work-from-home days.',
+          '(C) The parking lot will be resurfaced next week.',
+          '(D) Our new logo was unveiled yesterday.',
+        ],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) is correct: this sentence-insertion blank continues the instructions about the request form ("complete the form… Be sure to include your preferred work-from-home days").',
+          distractors:
+            '(A), (C), and (D) introduce unrelated topics (picnic, parking, logo) that break the flow of the request process.',
+          timeHack:
+            'SENTENCE blank: pick the option that continues the SAME topic as the surrounding sentences (the remote-work request), not a new subject.',
+        },
+      },
+      {
+        id: 'p6-003-q3',
+        prompt: 'Blank [3]',
+        options: ['(A) reduce', '(B) boost', '(C) delay', '(D) ignore'],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) "boost" is correct: the positive context ("improve work-life balance and ______ productivity") calls for a positive verb — "boost productivity."',
+          distractors:
+            '(A) "reduce," (C) "delay," and (D) "ignore" are negative and contradict the improvement the policy is said to bring.',
+          timeHack:
+            'VOCABULARY blank: parallel structure with a positive word ("improve") signals another positive word — "boost."',
+        },
+      },
+      {
+        id: 'p6-003-q4',
+        prompt: 'Blank [4]',
+        options: ['(A) affect', '(B) affects', '(C) affecting', '(D) affected'],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) "affects" is correct: the subject "the policy" is third-person singular, so the present-simple verb takes "-s" ("how the policy affects you").',
+          distractors:
+            '(A) "affect" is the plural/base form. (C) "affecting" and (D) "affected" do not fit the present-simple statement after "how the policy."',
+          timeHack:
+            'GRAMMAR blank: singular subject ("the policy") + present simple → verb + "-s." Match the verb to the subject.',
+        },
+      },
+    ],
+  },
+];
+
+const extra2Part7 = [
+  {
+    id: 'p7-double-002',
+    stimulus: {
+      kind: 'reading',
+      label: 'Double Passage',
+      passages: [
+        {
+          type: 'Job Posting',
+          heading: 'Now Hiring: Logistics Coordinator — Brightway Distribution',
+          text:
+            'Brightway Distribution is seeking a full-time Logistics Coordinator for our Riverside warehouse. Responsibilities include scheduling shipments, tracking inventory, and liaising with carriers.\n\n' +
+            'Requirements:\n' +
+            '• At least three years of experience in logistics or supply-chain operations\n' +
+            '• Proficiency with inventory-management software\n' +
+            '• A valid forklift certification (preferred but not required)\n\n' +
+            'We offer a competitive salary, health benefits, and paid training. To apply, send your résumé and a brief cover letter to careers@brightway.example by April 30.',
+        },
+        {
+          type: 'Email',
+          heading:
+            'To: careers@brightway.example — From: Daniel Ortiz — Subject: Logistics Coordinator Application',
+          text:
+            'Dear Hiring Manager,\n\n' +
+            'I am writing to apply for the Logistics Coordinator position. I have four years of experience coordinating shipments for a regional distributor, where I managed inventory using WarehousePro software. I also hold a valid forklift certification.\n\n' +
+            'I am available to start immediately and would welcome the opportunity to interview. My résumé is attached.\n\nSincerely,\nDaniel Ortiz',
+        },
+      ],
+    },
+    questions: [
+      {
+        id: 'p7-double-002-q1',
+        prompt: 'What is one requirement listed for the position?',
+        options: [
+          '(A) A university degree in business',
+          '(B) At least three years of logistics experience',
+          '(C) Fluency in two languages',
+          '(D) Five years of management experience',
+        ],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) is correct: the posting lists "At least three years of experience in logistics or supply-chain operations."',
+          distractors:
+            '(A) a degree, (C) language fluency, and (D) five years of management are not required by the posting.',
+          timeHack:
+            'Detail questions follow passage order — scan the bulleted "Requirements" list for the matching item.',
+        },
+      },
+      {
+        id: 'p7-double-002-q2',
+        prompt:
+          'Which preferred-but-not-required qualification does Daniel have? (Combine both texts.)',
+        options: [
+          '(A) A forklift certification',
+          "(B) A driver's license",
+          '(C) A degree in engineering',
+          '(D) Experience working abroad',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: the posting marks the forklift certification as "preferred but not required," and Daniel\'s email states "I also hold a valid forklift certification." Linking both passages gives the answer.',
+          distractors:
+            "(B), (C), and (D) — a driver's license, engineering degree, and overseas experience are not mentioned in either text.",
+          timeHack:
+            'Cross-reference questions: one passage labels a qualification "preferred," the other says the applicant has it. Match the shared item across both texts.',
+        },
+      },
+      {
+        id: 'p7-double-002-q3',
+        prompt: 'According to the email, when can Daniel begin working?',
+        options: ['(A) After April 30', '(B) Immediately', '(C) In three years', '(D) After training'],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) is correct: "I am available to start immediately."',
+          distractors:
+            '(A) April 30 is the application deadline, not his start date. (C) and (D) — three years and after training are not stated.',
+          timeHack:
+            'Availability questions: scan the email for "available to start." Do not confuse the application deadline (April 30) with the start date.',
+        },
+      },
+    ],
+  },
+];
+
 export const questionBank = {
-  1: part1,
-  2: [...part2, ...extraPart2],
-  3: [...part3, ...extraPart3],
-  4: [...part4, ...extraPart4],
-  5: [...part5, ...extraPart5],
-  6: part6,
-  7: [...part7, ...extraPart7],
+  1: [...part1, ...extra2Part1],
+  2: [...part2, ...extraPart2, ...extra2Part2],
+  3: [...part3, ...extraPart3, ...extra2Part3],
+  4: [...part4, ...extraPart4, ...extra2Part4],
+  5: [...part5, ...extraPart5, ...extra2Part5],
+  6: [...part6, ...extra2Part6],
+  7: [...part7, ...extraPart7, ...extra2Part7],
 };
 
 /** Count of individual questions in a list of blocks. */
