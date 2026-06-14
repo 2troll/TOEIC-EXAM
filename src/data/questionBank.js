@@ -1361,14 +1361,352 @@ const part7 = [
   },
 ];
 
+// ─────────────────────────────────────────────────────────────────────────
+// EXTRA ORIGINAL CONTENT — additional authentic-style items (all parts)
+// ─────────────────────────────────────────────────────────────────────────
+const extraPart2 = [
+  {
+    id: 'p2-007',
+    stimulus: {
+      kind: 'qr',
+      accent: 'Canadian',
+      audioScript:
+        'Which courier should we use for the international shipment?\n(A) The express service, since it clears customs faster.\n(B) Yes, it arrived on time.\n(C) In the loading dock.',
+    },
+    questions: [
+      {
+        id: 'p2-007-q1',
+        prompt: 'Choose the best response to the question.',
+        options: [
+          '(A) The express service, since it clears customs faster.',
+          '(B) Yes, it arrived on time.',
+          '(C) In the loading dock.',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "Which courier…" asks you to identify one option, and "the express service" names it with a relevant reason (faster customs clearance).',
+          distractors:
+            '(B) is a Yes/No answer, but "Which" questions cannot be answered with Yes/No. (C) "In the loading dock" answers "Where," not "Which courier."',
+          timeHack:
+            '"Which + noun" → pick the option that names one of the items. Reject Yes/No and location answers instantly.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p2-008',
+    stimulus: {
+      kind: 'qr',
+      accent: 'Australian',
+      audioScript:
+        "Let's postpone the product launch until the marketing materials are ready.\n(A) That sounds sensible — a short delay beats a rushed launch.\n(B) The market was very crowded today.\n(C) They launched the boat last spring.",
+    },
+    questions: [
+      {
+        id: 'p2-008-q1',
+        prompt: 'Choose the best response to the statement.',
+        options: [
+          '(A) That sounds sensible — a short delay beats a rushed launch.',
+          '(B) The market was very crowded today.',
+          '(C) They launched the boat last spring.',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: the statement is a suggestion ("Let\'s postpone…"), so the natural reply agrees or disagrees. "That sounds sensible…" agrees and gives a reason.',
+          distractors:
+            '(B) plays on "marketing / market" (a similar-word trap) and is off-topic. (C) plays on "launch / launched" (a similar-sound trap) and is unrelated.',
+          timeHack:
+            'For "Let\'s…" suggestions, expect agreement or disagreement. Distrust options that echo a prompt word with a different meaning (market, launched).',
+        },
+      },
+    ],
+  },
+];
+
+const extraPart3 = [
+  {
+    id: 'p3-003',
+    stimulus: {
+      kind: 'conversation',
+      accent: 'American / British',
+      audioScript:
+        'M: Sandra, our contract with the current cleaning vendor expires at the end of the month. Should we renew it?\n' +
+        "W: I've had a few complaints from staff about inconsistent service lately, so I'm hesitant. I think we should request quotes from two other providers first.\n" +
+        "M: That makes sense. If we do switch, we'll need the new vendor to start with no gap in service.\n" +
+        "W: Agreed. I'll send out the requests for quotes today and ask each provider how soon they could begin. Let's review the options at Friday's operations meeting.",
+    },
+    questions: [
+      {
+        id: 'p3-003-q1',
+        prompt: 'What are the speakers discussing?',
+        options: [
+          '(A) Whether to renew a service contract',
+          '(B) Hiring additional cleaning staff',
+          '(C) Relocating their offices',
+          '(D) Purchasing cleaning equipment',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: the man opens by noting the cleaning vendor\'s contract expires and asks "Should we renew it?" — the topic is whether to renew the contract.',
+          distractors:
+            '(B) hiring staff is not discussed (they consider outside vendors). (C) relocation and (D) buying equipment are never mentioned.',
+          timeHack:
+            'The first speaker\'s question sets the topic: "contract… expires… Should we renew it?" Answer the gist from the opening lines.',
+        },
+      },
+      {
+        id: 'p3-003-q2',
+        prompt: 'Why is the woman hesitant to renew?',
+        options: [
+          '(A) The vendor raised its prices.',
+          '(B) Staff have complained about inconsistent service.',
+          '(C) The contract terms are unclear.',
+          '(D) The vendor is going out of business.',
+        ],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) is correct: she says "I\'ve had a few complaints from staff about inconsistent service lately, so I\'m hesitant."',
+          distractors:
+            '(A) price increases, (C) unclear terms, and (D) the vendor closing are not mentioned. Her stated reason is service quality.',
+          timeHack:
+            'Find the reason marker ("so I\'m hesitant") and read the clause before it — the cause the speaker states is the answer.',
+        },
+      },
+      {
+        id: 'p3-003-q3',
+        prompt: 'What will the woman do today?',
+        options: [
+          '(A) Sign the renewal',
+          '(B) Cancel the current contract',
+          '(C) Send out requests for quotes',
+          '(D) Interview new employees',
+        ],
+        answer: 2,
+        feedback: {
+          correct:
+            '(C) is correct: "I\'ll send out the requests for quotes today and ask each provider how soon they could begin."',
+          distractors:
+            '(A) and (B) — no decision to sign or cancel has been made. (D) interviewing employees is unrelated.',
+          timeHack:
+            '"What will she do today?" → find the future-tense clause with the marker "today" ("I\'ll send… today").',
+        },
+      },
+    ],
+  },
+];
+
+const extraPart4 = [
+  {
+    id: 'p4-003',
+    stimulus: {
+      kind: 'talk',
+      accent: 'Canadian',
+      audioScript:
+        "Hello, this is a message for the IT department from Datacore Systems, your cloud hosting provider. " +
+        "We're calling to inform you of scheduled maintenance on our servers this Saturday, from one to four a.m. Eastern Time. " +
+        "During this window, your company's hosted applications may be temporarily unavailable. " +
+        "We recommend notifying your staff in advance and avoiding any large data uploads during that period. " +
+        "If you have questions or need to request a different maintenance window, please contact your account manager before Thursday. Thank you.",
+    },
+    questions: [
+      {
+        id: 'p4-003-q1',
+        prompt: 'What is the purpose of the message?',
+        options: [
+          '(A) To announce scheduled server maintenance',
+          '(B) To offer a new hosting plan',
+          '(C) To report a security breach',
+          '(D) To confirm a payment',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "We\'re calling to inform you of scheduled maintenance on our servers this Saturday."',
+          distractors:
+            '(B) no new plan is offered. (C) there is no security breach. (D) no payment is mentioned.',
+          timeHack:
+            'Purpose questions are answered right after the greeting/identification — listen for "We\'re calling to…".',
+        },
+      },
+      {
+        id: 'p4-003-q2',
+        prompt: 'What does the speaker recommend listeners do?',
+        options: [
+          '(A) Upgrade their servers',
+          '(B) Notify staff and avoid large uploads',
+          '(C) Reset their passwords',
+          '(D) Back up data to a USB drive',
+        ],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) is correct: "We recommend notifying your staff in advance and avoiding any large data uploads during that period."',
+          distractors:
+            '(A), (C), and (D) — upgrading servers, resetting passwords, and USB backups are not mentioned.',
+          timeHack:
+            'Listen for the recommendation verb ("We recommend…") and capture the two actions that follow it.',
+        },
+      },
+      {
+        id: 'p4-003-q3',
+        prompt: 'What should listeners do if they need a different maintenance window?',
+        options: [
+          '(A) Reply to this voicemail',
+          '(B) Visit the company website',
+          '(C) Contact their account manager before Thursday',
+          '(D) Wait until Saturday',
+        ],
+        answer: 2,
+        feedback: {
+          correct:
+            '(C) is correct: "please contact your account manager before Thursday."',
+          distractors:
+            '(A) replying to the voicemail, (B) the website, and (D) waiting are not the instruction given.',
+          timeHack:
+            'Conditional instructions ("If you need… please contact…") usually appear near the end and signal a question — match the action in the if-clause.',
+        },
+      },
+    ],
+  },
+];
+
+const extraPart5 = [
+  {
+    id: 'p5-013',
+    stimulus: { kind: 'sentence', drillType: 'Grammar (gerund/infinitive)' },
+    questions: [
+      {
+        id: 'p5-013-q1',
+        prompt:
+          'The committee recommended ______ the submission deadline to give vendors additional time to prepare their bids.',
+        options: ['(A) to extend', '(B) extending', '(C) extend', '(D) extension'],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) "extending" is correct: the verb "recommend" is followed by a gerund (–ing), not an infinitive.',
+          distractors:
+            '(A) "to extend" — "recommend" does not take a "to"-infinitive object. (C) "extend" is a bare verb. (D) "extension" is a noun and would need an article.',
+          timeHack:
+            'GRAMMAR item: memorize verbs that take a gerund — recommend / suggest / consider / avoid + –ing. See "recommend" → pick the –ing form.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p5-014',
+    stimulus: { kind: 'sentence', drillType: 'Vocabulary (verb choice)' },
+    questions: [
+      {
+        id: 'p5-014-q1',
+        prompt:
+          'The firm offers competitive salaries and flexible hours in order to ______ top talent in a crowded labor market.',
+        options: ['(A) attract', '(B) attend', '(C) attach', '(D) attempt'],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) "attract" is correct: companies offer good pay and perks to "attract talent" — a standard collocation meaning to draw in skilled people.',
+          distractors:
+            '(B) "attend" means to be present at. (C) "attach" means to fasten. (D) "attempt" means to try. All begin with "att-" but carry unrelated meanings.',
+          timeHack:
+            'VOCABULARY item: the purpose ("offers good salaries… in order to") points to drawing people in — "attract talent." Reject the look-alike "att-" words.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p5-015',
+    stimulus: { kind: 'sentence', drillType: 'Grammar (subject–verb agreement)' },
+    questions: [
+      {
+        id: 'p5-015-q1',
+        prompt:
+          'Each of the job applicants ______ required to complete an online assessment before the interview.',
+        options: ['(A) are', '(B) is', '(C) were', '(D) have'],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) "is" is correct: the subject is "Each," which is singular, so it takes the singular verb "is" — the plural "applicants" inside the prepositional phrase does not control the verb.',
+          distractors:
+            '(A) "are" and (C) "were" are plural. (D) "have" does not fit the passive "______ required."',
+          timeHack:
+            'GRAMMAR item: "Each / Every / One of the + plural noun" takes a SINGULAR verb. Ignore the plural noun right before the blank — match the real subject "Each."',
+        },
+      },
+    ],
+  },
+];
+
+const extraPart7 = [
+  {
+    id: 'p7-single-002',
+    stimulus: {
+      kind: 'reading',
+      label: 'Single Passage',
+      passages: [
+        {
+          type: 'Notice',
+          heading: 'NOTICE TO ALL TENANTS — Maple Tower Business Center',
+          text:
+            "Please be advised that the building's main elevators will undergo their annual safety inspection on Wednesday, March 19. Two of the four elevators will be out of service from 8:00 a.m. to 12:00 p.m., and the remaining two from 1:00 p.m. to 5:00 p.m. At least two elevators will be operating at all times.\n\n" +
+            'We anticipate longer-than-usual wait times during these periods and encourage tenants to allow extra time. The freight elevator will remain available for deliveries throughout the day. We apologize for any inconvenience and thank you for your cooperation. For questions, contact Building Management at extension 200.',
+        },
+      ],
+    },
+    questions: [
+      {
+        id: 'p7-single-002-q1',
+        prompt: 'What is the main purpose of the notice?',
+        options: [
+          '(A) To announce an elevator inspection schedule',
+          '(B) To advertise office space for rent',
+          '(C) To introduce a new building manager',
+          '(D) To report a power outage',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: the notice informs tenants that the elevators "will undergo their annual safety inspection" and gives the schedule.',
+          distractors:
+            '(B) no space is advertised. (C) no manager is introduced. (D) there is no power outage.',
+          timeHack:
+            'The first sentence of a notice states its purpose: "elevators will undergo… inspection" → an inspection announcement.',
+        },
+      },
+      {
+        id: 'p7-single-002-q2',
+        prompt: 'According to the notice, what will remain available all day?',
+        options: [
+          '(A) All four passenger elevators',
+          '(B) The freight elevator',
+          '(C) The parking garage',
+          '(D) The building café',
+        ],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) is correct: "The freight elevator will remain available for deliveries throughout the day."',
+          distractors:
+            '(A) only two of the four passenger elevators run at any one time. (C) the garage and (D) a café are not mentioned.',
+          timeHack:
+            'Scan for the question keyword ("remain available / throughout the day") and match the exact sentence — here, the freight elevator.',
+        },
+      },
+    ],
+  },
+];
+
 export const questionBank = {
   1: part1,
-  2: part2,
-  3: part3,
-  4: part4,
-  5: part5,
+  2: [...part2, ...extraPart2],
+  3: [...part3, ...extraPart3],
+  4: [...part4, ...extraPart4],
+  5: [...part5, ...extraPart5],
   6: part6,
-  7: part7,
+  7: [...part7, ...extraPart7],
 };
 
 /** Count of individual questions in a list of blocks. */

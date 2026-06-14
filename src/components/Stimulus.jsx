@@ -10,7 +10,7 @@ const LISTENING_KINDS = ['photo', 'qr', 'conversation', 'talk'];
  * Reading (Parts 6–7): passages are rendered as labeled documents. Part 5 shows
  * only a small categorization chip, since its sentence lives in the prompt.
  */
-export default function Stimulus({ stimulus }) {
+export default function Stimulus({ stimulus, onPlayed }) {
   if (!stimulus) return null;
 
   if (stimulus.kind === 'sentence') {
@@ -24,7 +24,7 @@ export default function Stimulus({ stimulus }) {
   if (LISTENING_KINDS.includes(stimulus.kind)) {
     return (
       <div className="stimulus stimulus-audio">
-        <AudioPlayer stimulus={stimulus} />
+        <AudioPlayer stimulus={stimulus} onPlayed={onPlayed} />
       </div>
     );
   }

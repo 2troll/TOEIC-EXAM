@@ -525,6 +525,18 @@ button {
   font-size: 0.76rem;
   color: #9fb1c6;
 }
+.locked-options {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blue-soft);
+  border: 1.5px dashed var(--navy-600);
+  color: var(--navy-700);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
 .module-card-feature {
   border-color: var(--gold);
   background: linear-gradient(180deg, #fffdf6, #ffffff);

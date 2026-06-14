@@ -1,8 +1,10 @@
 name: Deploy to GitHub Pages
 
+# Deploy from the repository's default branch (GitHub Pages only allows the
+# default branch to deploy to the github-pages environment).
 on:
   push:
-    branches: [main]
+    branches: [claude/toeic-exam-simulator-glefy9]
   workflow_dispatch:
 
 permissions:
@@ -10,10 +12,11 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment; cancel in-progress runs for newer pushes.
+# One deployment at a time; queue (do not cancel) so overlapping triggers
+# don't cancel a good run.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:

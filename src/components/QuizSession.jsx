@@ -44,6 +44,9 @@ export default function QuizSession({ session, onExit, onComplete }) {
   const [answers, setAnswers] = useState({});
   const [revealed, setRevealed] = useState({});
   const [seconds, setSeconds] = useState({});
+  // Parts 1 & 2 hide their answer choices until the audio has been played once.
+  const [playedBlocks, setPlayedBlocks] = useState({});
+  const markPlayed = (id) => setPlayedBlocks((p) => (p[id] ? p : { ...p, [id]: true }));
 
   const currentSet = sets[setIndex] || [];
   const isRevealed = !!revealed[setIndex];
@@ -157,9 +160,13 @@ export default function QuizSession({ session, onExit, onComplete }) {
       <div className="quiz-body">
         {currentSet.map((block) => (
           <div className="block" key={block.id}>
-            <Stimulus stimulus={block.stimulus} part={block.part} />
+            <Stimulus stimulus={block.stimulus} onPlayed={() => markPlayed(block.id)} />
 
             {block.questions.map((q) => {
+              const audioGated =
+                (block.part === 1 || block.part === 2) &&
+                !playedBlocks[block.id] &&
+                !isRevealed;
               const globalNo =
                 priorCount +
                 currentSet
@@ -178,6 +185,11 @@ export default function QuizSession({ session, onExit, onComplete }) {
                   </div>
                   <p className="q-prompt">{q.prompt}</p>
 
+                  {audioGated ? (
+                    <div className="locked-options">
+                      ▶ Play the audio to reveal the answer choices.
+                    </div>
+                  ) : (
                   <div className="options">
                     {q.options.map((opt, oi) => {
                       // Strip a leading "(A) " style label so we can render our own.
@@ -209,6 +221,7 @@ export default function QuizSession({ session, onExit, onComplete }) {
                       );
                     })}
                   </div>
+                  )}
 
                   {isRevealed && <FeedbackPanel feedback={q.feedback} />}
                 </div>

@@ -6,7 +6,7 @@ import { createSpeaker, speechSupported } from '../audio/speech.js';
  * transcript is hidden by default — as on the real exam you listen, then
  * answer — with an optional reveal for study.
  */
-export default function AudioPlayer({ stimulus }) {
+export default function AudioPlayer({ stimulus, onPlayed }) {
   const [playing, setPlaying] = useState(false);
   const [played, setPlayed] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
@@ -16,16 +16,21 @@ export default function AudioPlayer({ stimulus }) {
   // Rebuild the speaker whenever the stimulus changes; stop audio on unmount.
   useEffect(() => {
     speakerRef.current = createSpeaker(stimulus);
+    // If the device has no TTS, reveal answer choices immediately (the
+    // transcript is shown instead, so there is nothing to "play first").
+    if (!supported) onPlayed?.();
     return () => {
       speakerRef.current?.stop();
       setPlaying(false);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stimulus]);
 
   function play() {
     if (!speakerRef.current) return;
     setPlaying(true);
     setPlayed(true);
+    onPlayed?.();
     speakerRef.current.play(() => setPlaying(false));
   }
 
