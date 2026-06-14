@@ -48,6 +48,8 @@ export default function QuizSession({ session, onExit, onComplete }) {
   const [playedBlocks, setPlayedBlocks] = useState({});
   const markPlayed = (id) => setPlayedBlocks((p) => (p[id] ? p : { ...p, [id]: true }));
 
+  // Exam mode: no per-set feedback — answers are graded only at the very end.
+  const examMode = session.feedbackMode === 'end';
   const currentSet = sets[setIndex] || [];
   const isRevealed = !!revealed[setIndex];
   const elapsed = seconds[setIndex] || 0;
@@ -112,6 +114,7 @@ export default function QuizSession({ session, onExit, onComplete }) {
           chosen,
           answer: q.answer,
           options: q.options,
+          feedback: q.feedback,
           isCorrect,
         });
       }
@@ -233,7 +236,17 @@ export default function QuizSession({ session, onExit, onComplete }) {
       </div>
 
       <div className="quiz-actions">
-        {!isRevealed ? (
+        {examMode ? (
+          <>
+            <span className="answered-count">
+              {allQuestionsOnSet.filter((id) => answers[id] !== undefined).length} /{' '}
+              {allQuestionsOnSet.length} answered · exam mode (results at the end)
+            </span>
+            <button className="btn-primary" onClick={next} disabled={!allAnswered}>
+              {isLastSet ? 'Finish & View Score →' : 'Next Set →'}
+            </button>
+          </>
+        ) : !isRevealed ? (
           <>
             <span className="answered-count">
               {allQuestionsOnSet.filter((id) => answers[id] !== undefined).length} /{' '}

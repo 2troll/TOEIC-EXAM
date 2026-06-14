@@ -38,6 +38,8 @@ export default function App() {
   const [session, setSession] = useState(null);
   const [lastResults, setLastResults] = useState(null);
   const [progress, setProgress] = useState(() => loadProgress());
+  // 'instant' = feedback after each set; 'end' = exam mode (results only at end).
+  const [feedbackMode, setFeedbackMode] = useState('instant');
 
   const goMenu = useCallback(() => {
     setView('menu');
@@ -75,35 +77,40 @@ export default function App() {
       <main className="app-main">
         {view === 'menu' && (
           <MainMenu
+            feedbackMode={feedbackMode}
+            onSetFeedbackMode={setFeedbackMode}
             onFullExam={() =>
-              startSession(
-                buildExam(
+              startSession({
+                ...buildExam(
                   ALL_PARTS,
                   'Full Exam — All Parts (1–7)',
                   'A complete Listening & Reading exam. Press Play to hear each listening item, answer every set, then receive your score and a full error review at the end.',
                   'exam'
-                )
-              )
+                ),
+                feedbackMode,
+              })
             }
             onListeningExam={() =>
-              startSession(
-                buildExam(
+              startSession({
+                ...buildExam(
                   LISTENING_PARTS,
                   'Listening Test — Parts 1–4',
-                  'Audio is played aloud in the assigned accent. Listen, then answer. Your score and errors appear at the end.',
+                  'Audio is played aloud in the assigned accent. Listen, then answer.',
                   'exam-listening'
-                )
-              )
+                ),
+                feedbackMode,
+              })
             }
             onReadingExam={() =>
-              startSession(
-                buildExam(
+              startSession({
+                ...buildExam(
                   READING_PARTS,
                   'Reading Test — Parts 5–7',
-                  'Incomplete sentences, text completion, and single/double/triple passages. Your score and errors appear at the end.',
+                  'Incomplete sentences, text completion, and single/double/triple passages.',
                   'exam-reading'
-                )
-              )
+                ),
+                feedbackMode,
+              })
             }
             onTargeted={() => setView('section')}
             onPacing={() => setView('pacing')}

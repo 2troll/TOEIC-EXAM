@@ -1093,6 +1093,155 @@ button {
   border-color: var(--line);
 }
 
+/* ── Feedback mode toggle ───────────────────────────────── */
+.mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0 4px;
+  flex-wrap: wrap;
+}
+.mode-label {
+  font-size: 0.85rem;
+  color: var(--slate);
+  font-weight: 600;
+}
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+.seg button {
+  border: none;
+  background: #fff;
+  padding: 8px 14px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--slate);
+}
+.seg button + button {
+  border-left: 1px solid var(--line);
+}
+.seg .seg-on {
+  background: var(--navy-700);
+  color: #fff;
+}
+
+/* ── Review (enriched) ──────────────────────────────────── */
+.review-head-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.focus-tip {
+  font-size: 0.84rem;
+  color: var(--navy-700);
+  background: var(--blue-soft);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.review-sub {
+  color: var(--slate);
+  font-size: 0.86rem;
+  margin: 4px 0 12px;
+}
+.rev-item {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.rev-item.rev-bad {
+  border-left: 4px solid var(--red);
+}
+.rev-item.rev-ok {
+  border-left: 4px solid var(--green);
+}
+.rev-item > summary {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.88rem;
+}
+.rev-item > summary::-webkit-details-marker {
+  display: none;
+}
+.rev-mark {
+  font-weight: 800;
+}
+.rev-ok .rev-mark {
+  color: var(--green);
+}
+.rev-bad .rev-mark {
+  color: var(--red);
+}
+.rev-part {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--navy-600);
+  background: var(--blue-soft);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.rev-prompt {
+  flex: 1;
+  color: var(--ink);
+}
+.rev-body {
+  padding: 0 14px 14px;
+}
+.rev-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.rev-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--bg);
+  font-size: 0.88rem;
+}
+.rev-opt-key {
+  background: var(--green-soft);
+  border: 1px solid var(--green);
+}
+.rev-opt-yours {
+  background: var(--red-soft);
+  border: 1px solid var(--red);
+}
+.rev-letter {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 0.76rem;
+  color: var(--navy-700);
+}
+.rev-flag {
+  margin-left: auto;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--green);
+}
+.rev-flag.wrong {
+  color: var(--red);
+}
+
 /* ── Progress ───────────────────────────────────────────── */
 .progress-strip {
   display: flex;

@@ -1,5 +1,8 @@
 import { PART_META } from '../data/questionBank.js';
 import { estimateScore } from '../data/progress.js';
+import FeedbackPanel from './FeedbackPanel.jsx';
+
+const LETTERS = ['A', 'B', 'C', 'D', 'E'];
 
 function fmt(total) {
   const m = Math.floor(total / 60);
@@ -26,6 +29,15 @@ export default function Results({ results, onMenu, onRetry }) {
   const targetBudget = pacing ? target * total : null;
   const onPace = pacing ? totalSeconds <= targetBudget : null;
   const est = estimateScore(perSection);
+
+  // Weakest part = lowest accuracy among attempted parts (for "focus next").
+  let weakest = null;
+  for (const [part, v] of Object.entries(perPart)) {
+    if (!v.total) continue;
+    const acc = v.correct / v.total;
+    if (!weakest || acc < weakest.acc) weakest = { part, acc, ...v };
+  }
+  const wrongCount = review.filter((r) => !r.isCorrect).length;
 
   return (
     <section className="results">
@@ -110,22 +122,57 @@ export default function Results({ results, onMenu, onRetry }) {
       </div>
 
       <div className="review">
-        <h3>Item Review</h3>
-        <ul className="review-list">
+        <div className="review-head-row">
+          <h3>Item Review</h3>
+          {weakest && (
+            <span className="focus-tip">
+              Focus next: <strong>Part {weakest.part} · {PART_META[weakest.part]?.short}</strong>{' '}
+              ({weakest.correct}/{weakest.total}) — your lowest accuracy
+            </span>
+          )}
+        </div>
+        <p className="review-sub">
+          {wrongCount === 0
+            ? 'Perfect — no mistakes. Open any item to reinforce the strategy.'
+            : `${wrongCount} to review. Open each item to see the correct answer and why.`}
+        </p>
+
+        <div className="review-list">
           {review.map((r, i) => (
-            <li key={i} className={r.isCorrect ? 'rev-ok' : 'rev-bad'}>
-              <span className="rev-mark">{r.isCorrect ? '✓' : '✗'}</span>
-              <span className="rev-part">P{r.part}</span>
-              <span className="rev-prompt">{r.prompt}</span>
-              {!r.isCorrect && (
-                <span className="rev-keys">
-                  Your answer: {r.chosen != null ? String.fromCharCode(65 + r.chosen) : '—'} ·
-                  Key: {String.fromCharCode(65 + r.answer)}
-                </span>
-              )}
-            </li>
+            <details
+              className={`rev-item ${r.isCorrect ? 'rev-ok' : 'rev-bad'}`}
+              key={i}
+              open={!r.isCorrect && wrongCount <= 6}
+            >
+              <summary>
+                <span className="rev-mark">{r.isCorrect ? '✓' : '✗'}</span>
+                <span className="rev-part">P{r.part}</span>
+                <span className="rev-prompt">{r.prompt}</span>
+              </summary>
+              <div className="rev-body">
+                <div className="rev-options">
+                  {r.options.map((opt, oi) => {
+                    const text = opt.replace(/^\([A-E]\)\s*/, '');
+                    const isKey = oi === r.answer;
+                    const isYours = oi === r.chosen;
+                    let cls = 'rev-opt';
+                    if (isKey) cls += ' rev-opt-key';
+                    else if (isYours) cls += ' rev-opt-yours';
+                    return (
+                      <div className={cls} key={oi}>
+                        <span className="rev-letter">{LETTERS[oi]}</span>
+                        <span>{text}</span>
+                        {isKey && <span className="rev-flag">✓ correct</span>}
+                        {isYours && !isKey && <span className="rev-flag wrong">your answer</span>}
+                      </div>
+                    );
+                  })}
+                </div>
+                {r.feedback && <FeedbackPanel feedback={r.feedback} />}
+              </div>
+            </details>
           ))}
-        </ul>
+        </div>
       </div>
 
       <div className="results-actions">

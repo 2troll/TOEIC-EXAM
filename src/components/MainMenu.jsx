@@ -11,6 +11,8 @@ export default function MainMenu({
   onReviewMistakes,
   onProgress,
   progress,
+  feedbackMode,
+  onSetFeedbackMode,
 }) {
   const history = progress?.history || [];
   const missedN = Object.keys(progress?.missed || {}).length;
@@ -26,6 +28,24 @@ export default function MainMenu({
           the end you receive your <strong>score</strong>, an <strong>estimated TOEIC score</strong>,
           and a full <strong>error review</strong> with 3-tier feedback on every question.
         </p>
+      </div>
+
+      <div className="mode-toggle" role="group" aria-label="Feedback mode">
+        <span className="mode-label">Before you start — feedback:</span>
+        <div className="seg">
+          <button
+            className={feedbackMode === 'instant' ? 'seg-on' : ''}
+            onClick={() => onSetFeedbackMode('instant')}
+          >
+            Instant (learn as you go)
+          </button>
+          <button
+            className={feedbackMode === 'end' ? 'seg-on' : ''}
+            onClick={() => onSetFeedbackMode('end')}
+          >
+            Only at the end (real exam)
+          </button>
+        </div>
       </div>
 
       {(history.length > 0 || missedN > 0) && (
