@@ -13,6 +13,8 @@ export default function MainMenu({
   progress,
   feedbackMode,
   onSetFeedbackMode,
+  timed,
+  onSetTimed,
 }) {
   const history = progress?.history || [];
   const missedN = Object.keys(progress?.missed || {}).length;
@@ -46,6 +48,11 @@ export default function MainMenu({
             Only at the end (real exam)
           </button>
         </div>
+
+        <label className="timed-check">
+          <input type="checkbox" checked={timed} onChange={(e) => onSetTimed(e.target.checked)} />
+          <span>Timed (real exam clock)</span>
+        </label>
       </div>
 
       {(history.length > 0 || missedN > 0) && (

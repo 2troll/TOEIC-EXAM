@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Stimulus from './Stimulus.jsx';
 import FeedbackPanel from './FeedbackPanel.jsx';
 import Timer from './Timer.jsx';
@@ -6,6 +6,22 @@ import { PART_META } from '../data/questionBank.js';
 
 const GROUPED_KINDS = ['conversation', 'talk', 'passage', 'reading'];
 const LETTERS = ['A', 'B', 'C', 'D', 'E'];
+
+// Official TOEIC pace: Listening ≈27 s/question, Reading 45 s/question.
+const PACE_SECONDS = { listening: 27, reading: 45 };
+function examBudgetSeconds(blocks) {
+  let s = 0;
+  for (const b of blocks) {
+    const section = PART_META[b.part]?.section === 'listening' ? 'listening' : 'reading';
+    s += b.questions.length * PACE_SECONDS[section];
+  }
+  return s;
+}
+function fmtClock(total) {
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
 
 /**
  * Splits the session's blocks into "sets" (pages). Blocks with a shared
@@ -48,6 +64,16 @@ export default function QuizSession({ session, onExit, onComplete }) {
   const [playedBlocks, setPlayedBlocks] = useState({});
   const markPlayed = (id) => setPlayedBlocks((p) => (p[id] ? p : { ...p, [id]: true }));
 
+  // Timed exam: a single global countdown across the whole session.
+  const finishedRef = useRef(false);
+  const timed = !!session.timed;
+  const budget = useMemo(
+    () => (timed ? examBudgetSeconds(session.blocks) : 0),
+    [timed, session.blocks]
+  );
+  const [remaining, setRemaining] = useState(budget);
+  const [timeUp, setTimeUp] = useState(false);
+
   // Exam mode: no per-set feedback — answers are graded only at the very end.
   const examMode = session.feedbackMode === 'end';
   const currentSet = sets[setIndex] || [];
@@ -66,6 +92,33 @@ export default function QuizSession({ session, onExit, onComplete }) {
     }, 1000);
     return () => clearInterval(t);
   }, [setIndex, isRevealed]);
+
+  // Global exam countdown (timed mode): auto-submit when it reaches zero.
+  useEffect(() => {
+    setRemaining(budget);
+    setTimeUp(false);
+  }, [budget]);
+  useEffect(() => {
+    if (!timed) return undefined;
+    const t = setInterval(() => {
+      setRemaining((r) => {
+        if (r <= 1) {
+          clearInterval(t);
+          setTimeUp(true);
+          return 0;
+        }
+        return r - 1;
+      });
+    }, 1000);
+    return () => clearInterval(t);
+  }, [timed, budget]);
+  useEffect(() => {
+    if (timeUp && !finishedRef.current) {
+      finishedRef.current = true;
+      onComplete(computeResults());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeUp]);
 
   const allQuestionsOnSet = currentSet.flatMap((b) => b.questions.map((q) => q.id));
   const allAnswered = allQuestionsOnSet.every((id) => answers[id] !== undefined);
@@ -136,7 +189,8 @@ export default function QuizSession({ session, onExit, onComplete }) {
   function next() {
     if (setIndex + 1 < sets.length) {
       setSetIndex((i) => i + 1);
-    } else {
+    } else if (!finishedRef.current) {
+      finishedRef.current = true;
       onComplete(computeResults());
     }
   }
@@ -154,7 +208,14 @@ export default function QuizSession({ session, onExit, onComplete }) {
           {session.subtitle && <p className="quiz-sub">{session.subtitle}</p>}
         </div>
         <div className="quiz-head-right">
-          <Timer seconds={elapsed} target={setTarget} />
+          {timed ? (
+            <div className={`timer ${remaining <= 60 ? 'timer-over' : ''}`}>
+              <span className="timer-clock">⏳ {fmtClock(remaining)}</span>
+              <span className="timer-target">exam clock</span>
+            </div>
+          ) : (
+            <Timer seconds={elapsed} target={setTarget} />
+          )}
           <div className="set-progress">
             Set {setIndex + 1} of {sets.length}
           </div>

@@ -40,6 +40,8 @@ export default function App() {
   const [progress, setProgress] = useState(() => loadProgress());
   // 'instant' = feedback after each set; 'end' = exam mode (results only at end).
   const [feedbackMode, setFeedbackMode] = useState('instant');
+  // Timed mode runs a global countdown at the official TOEIC pace.
+  const [timed, setTimed] = useState(false);
 
   const goMenu = useCallback(() => {
     setView('menu');
@@ -79,6 +81,8 @@ export default function App() {
           <MainMenu
             feedbackMode={feedbackMode}
             onSetFeedbackMode={setFeedbackMode}
+            timed={timed}
+            onSetTimed={setTimed}
             onFullExam={() =>
               startSession({
                 ...buildExam(
@@ -88,6 +92,7 @@ export default function App() {
                   'exam'
                 ),
                 feedbackMode,
+                timed,
               })
             }
             onListeningExam={() =>
@@ -99,6 +104,7 @@ export default function App() {
                   'exam-listening'
                 ),
                 feedbackMode,
+                timed,
               })
             }
             onReadingExam={() =>
@@ -110,6 +116,7 @@ export default function App() {
                   'exam-reading'
                 ),
                 feedbackMode,
+                timed,
               })
             }
             onTargeted={() => setView('section')}
