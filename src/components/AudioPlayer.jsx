@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createSpeaker, speechSupported } from '../audio/speech.js';
+import Part1Photo from './Part1Photo.jsx';
 
 /**
  * Plays a listening stimulus aloud (device voice, assigned accent). The
@@ -71,13 +72,8 @@ export default function AudioPlayer({ stimulus, onPlayed }) {
         )}
       </div>
 
-      {/* Part 1 has a photo we render as text (no copyrighted image). */}
-      {stimulus.kind === 'photo' && (
-        <div className="photo-frame">
-          <span className="photo-label">[PHOTOGRAPH]</span>
-          <p>{stimulus.photoDescription}</p>
-        </div>
-      )}
+      {/* Part 1: original illustration of the scene (no copyrighted photo). */}
+      {stimulus.kind === 'photo' && <Part1Photo description={stimulus.photoDescription} />}
 
       {playing && <div className="audio-playing">▶ Playing… listen, then answer below.</div>}
 

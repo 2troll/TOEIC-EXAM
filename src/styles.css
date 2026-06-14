@@ -545,6 +545,26 @@ button {
   background: var(--gold);
   color: #2a2208;
 }
+.p1-photo {
+  margin: 12px 0 4px;
+}
+.p1-svg {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #eef3f8;
+}
+.p1-caption {
+  margin: 8px 0 0;
+  font-size: 0.78rem;
+  color: #9fb1c6;
+  text-align: center;
+  font-style: italic;
+}
 .photo-frame {
   background: rgba(255, 255, 255, 0.06);
   border: 1px dashed rgba(255, 255, 255, 0.25);
