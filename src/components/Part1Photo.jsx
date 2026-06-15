@@ -10,12 +10,13 @@ import { useEffect, useState } from 'react';
 
 function pickScene(description = '') {
   const d = description.toLowerCase();
-  if (/forklift/.test(d)) return 'forklift';
-  if (/telephone|phone/.test(d)) return 'phone';
-  if (/van|delivery|loading dock/.test(d)) return 'van';
-  if (/blueprint|engineer|hard hat|construction|crane/.test(d)) return 'blueprints';
-  if (/conference|chart|screen|presentation|projected/.test(d)) return 'meeting';
-  if (/caf|terrace|server|coffee/.test(d)) return 'cafe';
+  if (/forklift|warehouse|inventory|shelves|pallet/.test(d)) return 'forklift';
+  if (/telephone|phone|calling/.test(d)) return 'phone';
+  if (/van|delivery|loading dock|truck/.test(d)) return 'van';
+  if (/blueprint|engineer|hard hat|construction|crane|architect/.test(d)) return 'blueprints';
+  if (/conference|chart|screen|presentation|projected|meeting|boardroom|colleagues/.test(d))
+    return 'meeting';
+  if (/caf|terrace|server|coffee|restaurant|waiter|dining/.test(d)) return 'cafe';
   return 'office';
 }
 
@@ -236,7 +237,7 @@ async function fetchOpenversePhoto(query, signal) {
   };
 }
 
-export default function Part1Photo({ description }) {
+export default function Part1Photo({ description, query }) {
   const scene = pickScene(description);
   const Scene = SCENES[scene] || Phone;
   const [photo, setPhoto] = useState(null);
@@ -245,7 +246,11 @@ export default function Part1Photo({ description }) {
     let active = true;
     const ctrl = new AbortController();
     const timeout = setTimeout(() => ctrl.abort(), 9000);
-    const queries = SCENE_QUERY[scene] || [description];
+    // Per-item query (when provided) gives each photo distinct, accurate
+    // results; otherwise fall back to the per-scene queries.
+    const queries = query
+      ? [query, ...(SCENE_QUERY[scene] || [])]
+      : SCENE_QUERY[scene] || [description];
     (async () => {
       for (const q of queries) {
         try {

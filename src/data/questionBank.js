@@ -99,6 +99,7 @@ const part1 = [
     stimulus: {
       kind: 'photo',
       accent: 'American',
+      photoQuery: 'warehouse forklift moving boxes',
       photoDescription:
         'A warehouse interior. A worker wearing a safety vest and hard hat is operating a forklift to lift a wooden pallet stacked with cardboard boxes onto a high metal shelf. Other pallets rest on the concrete floor.',
       audioScript:
@@ -131,6 +132,7 @@ const part1 = [
     stimulus: {
       kind: 'photo',
       accent: 'British',
+      photoQuery: 'business presentation bar chart screen',
       photoDescription:
         'A modern conference room. Four colleagues in business attire are seated around an oval table. One woman is standing at the front, pointing at a bar chart projected on a screen. Laptops and notepads are open on the table.',
       audioScript:
@@ -163,6 +165,7 @@ const part1 = [
     stimulus: {
       kind: 'photo',
       accent: 'Canadian',
+      photoQuery: 'waiter serving coffee cafe table',
       photoDescription:
         'An outdoor café terrace. Two people are seated at a small round table. A server in an apron is placing two cups of coffee on the table. Potted plants line the railing behind them.',
       audioScript:
@@ -195,6 +198,7 @@ const part1 = [
     stimulus: {
       kind: 'photo',
       accent: 'Australian',
+      photoQuery: 'engineers construction blueprint site',
       photoDescription:
         'A construction site. Two engineers wearing hard hats and reflective vests are standing on a paved area, examining a set of blueprints spread across a portable table. A crane and a partially built structure are visible in the background.',
       audioScript:
@@ -1708,6 +1712,7 @@ const extra2Part1 = [
     stimulus: {
       kind: 'photo',
       accent: 'Canadian',
+      photoQuery: 'businesswoman telephone office desk',
       photoDescription:
         'A woman in business attire sits at a desk in an open-plan office, holding a telephone receiver to her ear while looking at a printed document. A laptop and a coffee mug are on the desk.',
       audioScript:
@@ -1740,6 +1745,7 @@ const extra2Part1 = [
     stimulus: {
       kind: 'photo',
       accent: 'Australian',
+      photoQuery: 'workers loading delivery van boxes',
       photoDescription:
         'Two workers in uniforms are loading cardboard boxes from a wheeled trolley into the back of a delivery van parked at a loading dock.',
       audioScript:
@@ -2262,14 +2268,441 @@ const extra2Part7 = [
   },
 ];
 
+// ─────────────────────────────────────────────────────────────────────────
+// EXTRA ORIGINAL CONTENT — BATCH 3 (more practice, all original)
+// ─────────────────────────────────────────────────────────────────────────
+const extra3Part1 = [
+  {
+    id: 'p1-007',
+    stimulus: {
+      kind: 'photo',
+      accent: 'American',
+      photoQuery: 'business meeting boardroom colleagues table',
+      photoDescription:
+        'Several colleagues in business attire are seated around a boardroom table, looking at printed documents. A laptop is open in front of one of them.',
+      audioScript:
+        '(A) The colleagues are seated around a table.\n(B) They are painting the walls.\n(C) A man is locking the door.\n(D) The room is empty.',
+    },
+    questions: [
+      {
+        id: 'p1-007-q1',
+        prompt: 'Select the statement that best describes the photograph.',
+        options: [
+          '(A) The colleagues are seated around a table.',
+          '(B) They are painting the walls.',
+          '(C) A man is locking the door.',
+          '(D) The room is empty.',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "are seated around a table" matches the colleagues sitting at the boardroom table.',
+          distractors:
+            '(B) painting the walls and (C) locking the door describe actions no one is doing. (D) "the room is empty" contradicts the people present.',
+          timeHack:
+            'Choose the option whose verb matches the clear, visible action (seated). Reject invented actions and statements that contradict what you see.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p1-008',
+    stimulus: {
+      kind: 'photo',
+      accent: 'British',
+      photoQuery: 'waiter restaurant serving food customers',
+      photoDescription:
+        'A waiter in an apron is placing a plate of food on a table where two customers are seated in a restaurant.',
+      audioScript:
+        '(A) A waiter is serving food to customers.\n(B) The customers are washing dishes.\n(C) A chef is chopping vegetables.\n(D) The tables are being stacked.',
+    },
+    questions: [
+      {
+        id: 'p1-008-q1',
+        prompt: 'Select the statement that best describes the photograph.',
+        options: [
+          '(A) A waiter is serving food to customers.',
+          '(B) The customers are washing dishes.',
+          '(C) A chef is chopping vegetables.',
+          '(D) The tables are being stacked.',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "is serving food to customers" matches the waiter placing a plate on the table.',
+          distractors:
+            '(B) washing dishes, (C) chopping vegetables, and (D) stacking tables are actions not shown in the scene.',
+          timeHack:
+            'Match the main person (waiter) to the main action (serving). Discard options with actors or actions you cannot see.',
+        },
+      },
+    ],
+  },
+];
+
+const extra3Part2 = [
+  {
+    id: 'p2-012',
+    stimulus: {
+      kind: 'qr',
+      accent: 'American',
+      audioScript:
+        "When does the new branch officially open?\n(A) On the first of March.\n(B) In the downtown area.\n(C) Yes, it's a large branch.",
+    },
+    questions: [
+      {
+        id: 'p2-012-q1',
+        prompt: 'Choose the best response to the question.',
+        options: [
+          '(A) On the first of March.',
+          '(B) In the downtown area.',
+          "(C) Yes, it's a large branch.",
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "When" asks for a time, and "On the first of March" gives a date.',
+          distractors:
+            '(B) "In the downtown area" answers "Where." (C) is a Yes/No answer (impossible for "When") and echoes "branch."',
+          timeHack: '"When" → a time/date. Eliminate location and Yes/No answers immediately.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p2-013',
+    stimulus: {
+      kind: 'qr',
+      accent: 'British',
+      audioScript:
+        "Could you help me set up the projector for the presentation?\n(A) Sure, I'll be right there.\n(B) The projection was very accurate.\n(C) It was a long presentation.",
+    },
+    questions: [
+      {
+        id: 'p2-013-q1',
+        prompt: 'Choose the best response to the question.',
+        options: [
+          "(A) Sure, I'll be right there.",
+          '(B) The projection was very accurate.',
+          '(C) It was a long presentation.',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "Could you help me…?" is a request, and "Sure, I\'ll be right there" agrees to help.',
+          distractors:
+            '(B) plays on "projector / projection" (a similar-word trap). (C) repeats "presentation" but does not respond to the request.',
+          timeHack:
+            'Requests ("Could you…?") take an agreement or refusal. Distrust word-echo and similar-sound options.',
+        },
+      },
+    ],
+  },
+];
+
+const extra3Part3 = [
+  {
+    id: 'p3-005',
+    stimulus: {
+      kind: 'conversation',
+      accent: 'British / American',
+      audioScript:
+        'W: Tom, we need to schedule the onboarding training for the three new hires starting Monday.\n' +
+        "M: Right. The training room is booked on Tuesday, but it's free Wednesday morning. Would that work?\n" +
+        'W: Wednesday morning is fine. Could you also prepare the welcome packets and arrange for IT to set up their accounts?\n' +
+        "M: I'll put the packets together today and email IT to have the accounts ready before Wednesday.",
+    },
+    questions: [
+      {
+        id: 'p3-005-q1',
+        prompt: 'What are the speakers planning?',
+        options: [
+          '(A) A training session for new employees',
+          '(B) A company anniversary party',
+          '(C) A product launch',
+          '(D) A budget review',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "schedule the onboarding training for the three new hires" identifies a training session for new employees.',
+          distractors: '(B), (C), (D) — a party, product launch, and budget review are not discussed.',
+          timeHack:
+            'The opening line sets the topic ("schedule the onboarding training"). Answer the gist from the first exchange.',
+        },
+      },
+      {
+        id: 'p3-005-q2',
+        prompt: 'When will the training take place?',
+        options: ['(A) Monday', '(B) Tuesday', '(C) Wednesday morning', '(D) Friday afternoon'],
+        answer: 2,
+        feedback: {
+          correct:
+            '(C) is correct: the room is booked Tuesday but free Wednesday morning, and the woman says "Wednesday morning is fine."',
+          distractors:
+            '(A) Monday is when the new hires start. (B) Tuesday the room is already booked. (D) Friday is not mentioned.',
+          timeHack:
+            'Watch the day swaps: start day (Monday) vs booked day (Tuesday) vs agreed day (Wednesday). Confirm the day both speakers accept.',
+        },
+      },
+      {
+        id: 'p3-005-q3',
+        prompt: 'What does the man agree to do?',
+        options: [
+          '(A) Cancel the training',
+          '(B) Prepare welcome packets and contact IT',
+          '(C) Interview the new hires',
+          '(D) Reserve a hotel',
+        ],
+        answer: 1,
+        feedback: {
+          correct:
+            "(B) is correct: \"I'll put the packets together today and email IT to have the accounts ready.\"",
+          distractors: '(A), (C), (D) — cancelling, interviewing, and booking a hotel are not mentioned.',
+          timeHack:
+            'The closing line lists the man\'s next actions ("I\'ll put the packets together… and email IT"). Match both tasks.',
+        },
+      },
+    ],
+  },
+];
+
+const extra3Part4 = [
+  {
+    id: 'p4-005',
+    stimulus: {
+      kind: 'talk',
+      accent: 'Australian',
+      audioScript:
+        'Attention passengers on flight BA294 to Singapore. We will begin boarding in approximately fifteen minutes at Gate 22. ' +
+        'We will board by zone, starting with passengers requiring assistance and those travelling with young children, followed by business class. ' +
+        'Please have your boarding pass and passport ready for inspection. Due to a high number of passengers today, we kindly ask that you keep your carry-on luggage to one item to speed up boarding. Thank you for your cooperation.',
+    },
+    questions: [
+      {
+        id: 'p4-005-q1',
+        prompt: 'Where is this announcement being made?',
+        options: [
+          '(A) At an airport gate',
+          '(B) On a train platform',
+          '(C) In a hotel lobby',
+          '(D) At a bus station',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "boarding… at Gate 22," "boarding pass and passport," and "flight BA294" indicate an airport gate.',
+          distractors: '(B), (C), (D) — a train platform, hotel, and bus station do not fit "flight" and "boarding pass."',
+          timeHack:
+            'Setting clues cluster early: "flight," "Gate," "boarding pass" → airport. Decide from the first sentences.',
+        },
+      },
+      {
+        id: 'p4-005-q2',
+        prompt: 'Who will board first?',
+        options: [
+          '(A) Business-class passengers',
+          '(B) Passengers requiring assistance and families with young children',
+          '(C) Passengers in the last row',
+          '(D) Frequent flyers',
+        ],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) is correct: "starting with passengers requiring assistance and those travelling with young children."',
+          distractors: '(A) business class boards after them. (C) and (D) are not mentioned.',
+          timeHack:
+            'Order words ("starting with…, followed by…") signal sequence. The group after "starting with" is first.',
+        },
+      },
+      {
+        id: 'p4-005-q3',
+        prompt: 'What are passengers asked to do?',
+        options: [
+          '(A) Limit carry-on luggage to one item',
+          '(B) Check in online',
+          '(C) Pay an extra fee',
+          '(D) Change their seats',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "we kindly ask that you keep your carry-on luggage to one item."',
+          distractors: '(B), (C), (D) — online check-in, fees, and seat changes are not requested.',
+          timeHack: 'Requests use "we ask that…/please." Capture the action that follows it (one carry-on item).',
+        },
+      },
+    ],
+  },
+];
+
+const extra3Part5 = [
+  {
+    id: 'p5-020',
+    stimulus: { kind: 'sentence', drillType: 'Grammar (purpose)' },
+    questions: [
+      {
+        id: 'p5-020-q1',
+        prompt:
+          'The company installed new accounting software ______ streamline its invoicing process.',
+        options: ['(A) so that', '(B) in order to', '(C) due to', '(D) because'],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) "in order to" is correct: it introduces a purpose followed by a base verb ("in order to streamline").',
+          distractors:
+            '(A) "so that" needs a full clause with a modal. (C) "due to" takes a noun. (D) "because" needs a full clause, not a bare verb.',
+          timeHack:
+            'GRAMMAR item: a bare verb after the blank ("streamline") → "in order to / to" (purpose). A full clause → "so that / because."',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p5-021',
+    stimulus: { kind: 'sentence', drillType: 'Vocabulary (verb + preposition)' },
+    questions: [
+      {
+        id: 'p5-021-q1',
+        prompt: "All employees are expected to ______ to the company's code of conduct.",
+        options: ['(A) adhere', '(B) attach', '(C) attend', '(D) adjust'],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) "adhere" is correct: "adhere to (a rule/policy)" means to follow it strictly — the standard collocation.',
+          distractors:
+            '(B) "attach to," (C) "attend to," and (D) "adjust to" exist but do not mean to follow a code of conduct.',
+          timeHack:
+            'VOCABULARY item: "______ to [a policy]" → "adhere." Learn the verb+preposition pair (adhere to = comply with).',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p5-022',
+    stimulus: { kind: 'sentence', drillType: 'Grammar (quantifier)' },
+    questions: [
+      {
+        id: 'p5-022-q1',
+        prompt: 'The renovation was completed without ______ disruption to daily operations.',
+        options: ['(A) many', '(B) much', '(C) few', '(D) several'],
+        answer: 1,
+        feedback: {
+          correct:
+            '(B) "much" is correct: "disruption" is uncountable, so it takes "much," not the countable quantifiers.',
+          distractors: '(A) "many," (C) "few," and (D) "several" are used with countable plural nouns.',
+          timeHack:
+            'GRAMMAR item: uncountable noun (disruption, traffic, progress) → much/less; countable plural → many/few.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p5-023',
+    stimulus: { kind: 'sentence', drillType: 'Grammar (word form)' },
+    questions: [
+      {
+        id: 'p5-023-q1',
+        prompt: 'The assembly instructions were so ______ that no one needed to ask for help.',
+        options: ['(A) clear', '(B) clearance', '(C) clearly', '(D) cleared'],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) "clear" is correct: after the linking verb "were," an adjective is required ("were so clear").',
+          distractors:
+            '(B) "clearance" is a noun. (C) "clearly" is an adverb. (D) "cleared" is a past-tense verb. Only the adjective follows "were."',
+          timeHack:
+            'GRAMMAR item: linking verb ("were") + "so ______ that" → adjective. Eliminate the noun, adverb, and verb forms.',
+        },
+      },
+    ],
+  },
+];
+
+const extra3Part7 = [
+  {
+    id: 'p7-double-003',
+    stimulus: {
+      kind: 'reading',
+      label: 'Double Passage',
+      passages: [
+        {
+          type: 'Confirmation Email',
+          heading: 'To: Helen Park — From: Grandview Hotel — Subject: Booking Confirmation #4471',
+          text:
+            'Dear Ms. Park,\n\nThank you for booking with the Grandview Hotel. Your reservation is confirmed for two nights, from June 10 to June 12, in a Deluxe King room at a rate of $180 per night. Check-in begins at 3:00 p.m. and check-out is at 11:00 a.m.\n\n' +
+            'Your booking includes complimentary breakfast and access to the fitness center. If you need to modify or cancel your reservation, please do so at least 48 hours before arrival to avoid a charge.\n\nWe look forward to welcoming you.',
+        },
+        {
+          type: 'Email',
+          heading: 'To: Grandview Hotel — From: Helen Park — Subject: RE: Booking Confirmation #4471',
+          text:
+            'Hello,\n\nThank you for the confirmation. I would like to request a late check-out, if possible, as my flight does not depart until the evening of June 12. Would 2:00 p.m. be acceptable?\n\n' +
+            'Also, could you confirm whether the hotel offers airport shuttle service? Thank you.\n\nBest regards,\nHelen Park',
+        },
+      ],
+    },
+    questions: [
+      {
+        id: 'p7-double-003-q1',
+        prompt: 'How much will Ms. Park pay per night?',
+        options: ['(A) $48', '(B) $110', '(C) $180', '(D) $360'],
+        answer: 2,
+        feedback: {
+          correct: '(C) $180 is correct: "a Deluxe King room at a rate of $180 per night."',
+          distractors:
+            '(A) $48 echoes the 48-hour cancellation window. (D) $360 is the two-night total, not the per-night rate. (B) is not mentioned.',
+          timeHack:
+            'Number traps: per-night vs total vs an unrelated number (48 hours). Re-read the clause to confirm which quantity is asked.',
+        },
+      },
+      {
+        id: 'p7-double-003-q2',
+        prompt: 'What is included with the booking?',
+        options: [
+          '(A) Free breakfast and fitness center access',
+          '(B) A free room upgrade',
+          '(C) Airport shuttle service',
+          '(D) A late check-out',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "Your booking includes complimentary breakfast and access to the fitness center."',
+          distractors:
+            '(B) no upgrade is mentioned. (C) the shuttle is what Ms. Park asks about — not confirmed. (D) the late check-out is a request, not an included feature.',
+          timeHack: 'Scan for "includes/complimentary." Separate confirmed inclusions from the guest\'s later requests.',
+        },
+      },
+      {
+        id: 'p7-double-003-q3',
+        prompt: 'Why does Ms. Park request a late check-out?',
+        options: [
+          '(A) Her flight departs in the evening',
+          '(B) She wants to use the fitness center',
+          '(C) She is arriving late',
+          '(D) She booked an extra night',
+        ],
+        answer: 0,
+        feedback: {
+          correct:
+            '(A) is correct: "I would like to request a late check-out… as my flight does not depart until the evening of June 12."',
+          distractors: '(B), (C), (D) — the fitness center, a late arrival, and an extra night are not her stated reason.',
+          timeHack: 'For "why," find the reason marker ("as / because"): "as my flight does not depart until the evening."',
+        },
+      },
+    ],
+  },
+];
+
 export const questionBank = {
-  1: [...part1, ...extra2Part1],
-  2: [...part2, ...extraPart2, ...extra2Part2],
-  3: [...part3, ...extraPart3, ...extra2Part3],
-  4: [...part4, ...extraPart4, ...extra2Part4],
-  5: [...part5, ...extraPart5, ...extra2Part5],
+  1: [...part1, ...extra2Part1, ...extra3Part1],
+  2: [...part2, ...extraPart2, ...extra2Part2, ...extra3Part2],
+  3: [...part3, ...extraPart3, ...extra2Part3, ...extra3Part3],
+  4: [...part4, ...extraPart4, ...extra2Part4, ...extra3Part4],
+  5: [...part5, ...extraPart5, ...extra2Part5, ...extra3Part5],
   6: [...part6, ...extra2Part6],
-  7: [...part7, ...extraPart7, ...extra2Part7],
+  7: [...part7, ...extraPart7, ...extra2Part7, ...extra3Part7],
 };
 
 /** Count of individual questions in a list of blocks. */
