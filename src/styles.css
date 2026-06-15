@@ -8,14 +8,14 @@
   --line: #dbe2ea;
   --paper: #ffffff;
   --bg: #eef2f7;
-  --gold: #c79a3a;
-  --gold-soft: #f3e6c4;
+  --gold: #5b9bd5;
+  --gold-soft: #e8f0f8;
   --green: #1f8a4c;
   --green-soft: #e3f4e9;
   --red: #c0392b;
   --red-soft: #fbe7e4;
   --blue-soft: #e6eef8;
-  --radius: 12px;
+  --radius: 8px;
   --shadow: 0 8px 28px rgba(11, 28, 51, 0.1);
   --shadow-sm: 0 2px 8px rgba(11, 28, 51, 0.08);
   --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
@@ -55,9 +55,14 @@ button {
 
 /* ── Banner ─────────────────────────────────────────────── */
 .banner {
-  background: linear-gradient(135deg, var(--navy-900), var(--navy-700));
-  color: #fff;
-  border-bottom: 3px solid var(--gold);
+  background: #ffffff;
+  color: var(--navy-800);
+  border-bottom: 2px solid var(--navy-700);
+}
+.banner .btn-ghost {
+  color: var(--navy-700);
+  border-color: var(--line);
+  background: #fff;
 }
 .banner-inner {
   max-width: 1080px;
@@ -83,7 +88,7 @@ button {
   font-family: var(--mono);
   font-size: 7px;
   line-height: 1.1;
-  color: var(--gold);
+  color: var(--navy-600);
   margin: 0;
   white-space: pre;
 }
@@ -95,7 +100,7 @@ button {
 .banner-titles p {
   margin: 2px 0 0;
   font-size: 0.8rem;
-  color: #b9c8db;
+  color: var(--slate);
   letter-spacing: 0.03em;
 }
 .banner-actions {

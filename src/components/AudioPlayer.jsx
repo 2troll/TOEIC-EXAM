@@ -72,9 +72,9 @@ export default function AudioPlayer({ stimulus, onPlayed }) {
         )}
       </div>
 
-      {/* Part 1: real CC-licensed photo (with SVG fallback). */}
+      {/* Part 1: fixed, verified CC-licensed photo (with SVG fallback). */}
       {stimulus.kind === 'photo' && (
-        <Part1Photo description={stimulus.photoDescription} query={stimulus.photoQuery} />
+        <Part1Photo description={stimulus.photoDescription} photo={stimulus.photo} />
       )}
 
       {playing && <div className="audio-playing">▶ Playing… listen, then answer below.</div>}

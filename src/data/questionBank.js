@@ -99,30 +99,34 @@ const part1 = [
     stimulus: {
       kind: 'photo',
       accent: 'American',
-      photoQuery: 'warehouse forklift moving boxes',
-      photoDescription:
-        'A warehouse interior. A worker wearing a safety vest and hard hat is operating a forklift to lift a wooden pallet stacked with cardboard boxes onto a high metal shelf. Other pallets rest on the concrete floor.',
+      photo: {
+        url: 'https://images.rawpixel.com/editor_1024/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAzL2ZsNTI2MjA0NDU0MjUtaW1hZ2UuanBn.jpg',
+        title: 'Warehouse forklift moving boxes',
+        license: 'cc0',
+        source: 'https://www.rawpixel.com/image/11073059/photo-image-face-person-public-domain',
+      },
+      photoDescription: 'A forklift is being used to move boxes inside a warehouse.',
       audioScript:
-        '(A) A worker is stacking boxes by hand.\n(B) A forklift is being loaded onto a truck.\n(C) A man is operating a forklift in a warehouse.\n(D) Shelves are being assembled by technicians.',
+        '(A) A forklift is being used to move boxes.\n(B) The shelves are completely empty.\n(C) A man is sweeping the floor.\n(D) Boxes are being unpacked by hand.',
     },
     questions: [
       {
         id: 'p1-001-q1',
         prompt: 'Select the statement that best describes the photograph.',
         options: [
-          '(A) A worker is stacking boxes by hand.',
-          '(B) A forklift is being loaded onto a truck.',
-          '(C) A man is operating a forklift in a warehouse.',
-          '(D) Shelves are being assembled by technicians.',
+          '(A) A forklift is being used to move boxes.',
+          '(B) The shelves are completely empty.',
+          '(C) A man is sweeping the floor.',
+          '(D) Boxes are being unpacked by hand.',
         ],
-        answer: 2,
+        answer: 0,
         feedback: {
           correct:
-            '(C) is correct: the present-continuous "is operating" accurately matches the visible action, and "in a warehouse" matches the setting. Part 1 rewards the statement that captures the main subject doing the main action.',
+            '(A) is correct: a forklift moving boxes is the main action and subject in the photo.',
           distractors:
-            '(A) "stacking boxes by hand" contradicts the image — he is using a forklift, not his hands. (B) is a passive-voice trap ("is being loaded onto a truck"); the forklift is in use, not being loaded, and no truck is shown. (D) introduces "technicians" and "assembling shelves," an action that is not happening.',
+            '(B) the shelves are not empty. (C) no one is sweeping. (D) the boxes are moved by the forklift, not unpacked by hand.',
           timeHack:
-            'Lock onto the clearest human action first. The instant you confirm "forklift + operating," eliminate any option whose verb (stacking, assembling) or object (truck) you cannot see. Passive "is being + past participle" options are usually wrong in Part 1 unless a person is clearly performing that action on the object.',
+            'Identify the main subject + action (forklift moving boxes) and pick the option that names it. Reject options with actions or objects you cannot see.',
         },
       },
     ],
@@ -132,30 +136,33 @@ const part1 = [
     stimulus: {
       kind: 'photo',
       accent: 'British',
-      photoQuery: 'business presentation bar chart screen',
-      photoDescription:
-        'A modern conference room. Four colleagues in business attire are seated around an oval table. One woman is standing at the front, pointing at a bar chart projected on a screen. Laptops and notepads are open on the table.',
+      photo: {
+        url: 'https://images.rawpixel.com/editor_1024/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvZmw0OTUwOTExMjc0Ny1pbWFnZS1reWJlZnFtdS5qcGc.jpg',
+        title: 'Barista making coffee',
+        license: 'cc0',
+        source: 'https://images.rawpixel.com',
+      },
+      photoDescription: 'A barista is preparing a cup of coffee at a café.',
       audioScript:
-        '(A) A presenter is pointing at a chart on a screen.\n(B) The participants are leaving the room.\n(C) Someone is repairing the projector.\n(D) They are setting the table for a meal.',
+        '(A) A barista is preparing coffee.\n(B) The café is being painted.\n(C) Customers are washing dishes.\n(D) The shelves are being stocked with books.',
     },
     questions: [
       {
         id: 'p1-002-q1',
         prompt: 'Select the statement that best describes the photograph.',
         options: [
-          '(A) A presenter is pointing at a chart on a screen.',
-          '(B) The participants are leaving the room.',
-          '(C) Someone is repairing the projector.',
-          '(D) They are setting the table for a meal.',
+          '(A) A barista is preparing coffee.',
+          '(B) The café is being painted.',
+          '(C) Customers are washing dishes.',
+          '(D) The shelves are being stocked with books.',
         ],
         answer: 0,
         feedback: {
-          correct:
-            '(A) is correct: "is pointing at a chart on a screen" matches the standing presenter\'s action and the projected bar chart precisely.',
+          correct: '(A) is correct: the person is preparing coffee, the main action in the photo.',
           distractors:
-            '(B) "leaving the room" contradicts the seated, attentive participants. (C) "repairing the projector" — the projector is working, not being repaired. (D) "setting the table for a meal" is a homophone/association trap: a "table" is present, but it is a meeting table with laptops, not a dining setup.',
+            '(B) no one is painting. (C) customers are not washing dishes. (D) there are no books being stocked.',
           timeHack:
-            'Beware repeated nouns used out of context — "table" appears in the photo and in option (D), but the action is wrong. Match the VERB to the scene before trusting a noun you recognize.',
+            'Match the person to the clear action (preparing coffee). Eliminate options with unseen actions or objects.',
         },
       },
     ],
@@ -164,31 +171,34 @@ const part1 = [
     id: 'p1-003',
     stimulus: {
       kind: 'photo',
-      accent: 'Canadian',
-      photoQuery: 'waiter serving coffee cafe table',
-      photoDescription:
-        'An outdoor café terrace. Two people are seated at a small round table. A server in an apron is placing two cups of coffee on the table. Potted plants line the railing behind them.',
+      accent: 'Australian',
+      photo: {
+        url: 'https://live.staticflickr.com/65535/54880213598_a08ee4b766_b.jpg',
+        title: 'Delivery van',
+        license: 'pdm',
+        source: 'https://www.flickr.com',
+      },
+      photoDescription: 'A delivery van is on a street.',
       audioScript:
-        '(A) Customers are paying at the counter.\n(B) A server is placing cups on a table.\n(C) The terrace is being swept.\n(D) Plants are being watered by a gardener.',
+        '(A) A delivery van is on the street.\n(B) A plane is taking off.\n(C) The van is being repaired in a garage.\n(D) People are boarding a train.',
     },
     questions: [
       {
         id: 'p1-003-q1',
         prompt: 'Select the statement that best describes the photograph.',
         options: [
-          '(A) Customers are paying at the counter.',
-          '(B) A server is placing cups on a table.',
-          '(C) The terrace is being swept.',
-          '(D) Plants are being watered by a gardener.',
+          '(A) A delivery van is on the street.',
+          '(B) A plane is taking off.',
+          '(C) The van is being repaired in a garage.',
+          '(D) People are boarding a train.',
         ],
-        answer: 1,
+        answer: 0,
         feedback: {
-          correct:
-            '(B) is correct: "is placing cups on a table" exactly describes the server\'s in-progress action.',
+          correct: '(A) is correct: the photo shows a delivery van on the street.',
           distractors:
-            '(A) "paying at the counter" — no counter or payment is shown. (C) "is being swept" is a passive trap with no actor performing it. (D) "watered by a gardener" uses the visible "plants" but invents an action and a person who are not present.',
+            '(B) there is no plane. (C) the van is not in a garage being repaired. (D) no train or passengers are shown.',
           timeHack:
-            'When a clear subject (server) is doing a clear action (placing cups), choose it immediately. Discard any option that adds an unseen actor ("gardener") or an unseen action ("paying," "sweeping").',
+            'Name the main object (van) and its setting (street). Reject options that introduce a different vehicle or place.',
         },
       },
     ],
@@ -197,31 +207,106 @@ const part1 = [
     id: 'p1-004',
     stimulus: {
       kind: 'photo',
-      accent: 'Australian',
-      photoQuery: 'engineers construction blueprint site',
-      photoDescription:
-        'A construction site. Two engineers wearing hard hats and reflective vests are standing on a paved area, examining a set of blueprints spread across a portable table. A crane and a partially built structure are visible in the background.',
+      accent: 'Canadian',
+      photo: {
+        url: 'https://live.staticflickr.com/1630/25943625961_82f5afeb30_b.jpg',
+        title: 'Construction site',
+        license: 'cc0',
+        source: 'https://www.flickr.com',
+      },
+      photoDescription: 'A concrete structure is being built at a construction site.',
       audioScript:
-        '(A) The engineers are reviewing some blueprints.\n(B) A crane is being dismantled.\n(C) Workers are paving the road.\n(D) They are putting on their vests.',
+        '(A) A structure is under construction.\n(B) The building is being demolished.\n(C) The area is covered with snow.\n(D) A garden is being planted.',
     },
     questions: [
       {
         id: 'p1-004-q1',
         prompt: 'Select the statement that best describes the photograph.',
         options: [
-          '(A) The engineers are reviewing some blueprints.',
-          '(B) A crane is being dismantled.',
-          '(C) Workers are paving the road.',
-          '(D) They are putting on their vests.',
+          '(A) A structure is under construction.',
+          '(B) The building is being demolished.',
+          '(C) The area is covered with snow.',
+          '(D) A garden is being planted.',
         ],
         answer: 0,
         feedback: {
-          correct:
-            '(A) is correct: "are reviewing some blueprints" matches the two engineers examining the documents on the table.',
+          correct: '(A) is correct: the photo shows a structure being built at a construction site.',
           distractors:
-            '(B) "is being dismantled" — the crane is simply present in the background, not being taken apart. (C) "paving the road" describes an action no one is performing. (D) "putting on their vests" is a state-vs-action trap: they are already wearing the vests; the action of putting them on is finished.',
+            '(B) the structure is being built, not demolished. (C) there is no snow. (D) no garden is being planted.',
           timeHack:
-            'Distinguish completed states from in-progress actions. "Putting on" (action) vs. "wearing" (state) is a classic Part 1 trap — if the clothing is already on, the "putting on" option is wrong.',
+            'Distinguish "under construction" (being built) from "being demolished" (torn down). Match the state to what you see.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p1-005',
+    stimulus: {
+      kind: 'photo',
+      accent: 'American',
+      photo: {
+        url: 'https://images.rawpixel.com/editor_1024/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTExL2ZsNTE0MjAxMjcyMDMtaW1hZ2UuanBn.jpg',
+        title: 'A person talking on the phone',
+        license: 'cc0',
+        source: 'https://images.rawpixel.com',
+      },
+      photoDescription: 'A person is talking on a telephone.',
+      audioScript:
+        '(A) A person is talking on the phone.\n(B) A man is cooking a meal.\n(C) Someone is riding a bicycle.\n(D) A woman is painting a wall.',
+    },
+    questions: [
+      {
+        id: 'p1-005-q1',
+        prompt: 'Select the statement that best describes the photograph.',
+        options: [
+          '(A) A person is talking on the phone.',
+          '(B) A man is cooking a meal.',
+          '(C) Someone is riding a bicycle.',
+          '(D) A woman is painting a wall.',
+        ],
+        answer: 0,
+        feedback: {
+          correct: '(A) is correct: the person is talking on the phone — the main action shown.',
+          distractors:
+            '(B) cooking, (C) cycling, and (D) painting are actions not shown in the photo.',
+          timeHack:
+            'Lock onto the visible action (on the phone) and reject options describing entirely different activities.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'p1-006',
+    stimulus: {
+      kind: 'photo',
+      accent: 'British',
+      photo: {
+        url: 'https://images.rawpixel.com/editor_1024/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvaXMyMzEyNC1pbWFnZS1rd3lzN25hcy5qcGc.jpg',
+        title: 'Woman working on a computer',
+        license: 'cc0',
+        source: 'https://www.rawpixel.com/image/5968487/woman-computer-work',
+      },
+      photoDescription: 'A person is working at a laptop computer at a desk.',
+      audioScript:
+        '(A) A person is working on a laptop.\n(B) The computer screen is broken.\n(C) Someone is watering plants.\n(D) The desk has been cleared.',
+    },
+    questions: [
+      {
+        id: 'p1-006-q1',
+        prompt: 'Select the statement that best describes the photograph.',
+        options: [
+          '(A) A person is working on a laptop.',
+          '(B) The computer screen is broken.',
+          '(C) Someone is watering plants.',
+          '(D) The desk has been cleared.',
+        ],
+        answer: 0,
+        feedback: {
+          correct: '(A) is correct: the person is working at a laptop — the main subject and action.',
+          distractors:
+            '(B) the screen is in use, not broken. (C) no one is watering plants. (D) the desk is in use, not cleared.',
+          timeHack:
+            'Pick the option matching the clear subject + action (working on a laptop). Reject unseen states and actions.',
         },
       },
     ],
@@ -2696,7 +2781,7 @@ const extra3Part7 = [
 ];
 
 export const questionBank = {
-  1: [...part1, ...extra2Part1, ...extra3Part1],
+  1: [...part1],
   2: [...part2, ...extraPart2, ...extra2Part2, ...extra3Part2],
   3: [...part3, ...extraPart3, ...extra2Part3, ...extra3Part3],
   4: [...part4, ...extraPart4, ...extra2Part4, ...extra3Part4],

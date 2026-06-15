@@ -6,7 +6,7 @@
  * shown). If that fails (offline, no result), an original inline-SVG scene is
  * drawn instead — so the single-file offline build always shows something.
  */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function pickScene(description = '') {
   const d = description.toLowerCase();
@@ -196,106 +196,45 @@ const SCENES = {
   office: Phone,
 };
 
-// Search terms per scene: a specific query plus a broader fallback, so most
-// scenes return a real photo instead of falling back to the illustration.
-const SCENE_QUERY = {
-  forklift: ['warehouse forklift boxes', 'warehouse'],
-  meeting: ['business presentation meeting', 'business people office'],
-  cafe: ['cafe coffee people', 'coffee shop'],
-  blueprints: ['construction engineers site', 'construction site'],
-  phone: ['businesswoman office telephone', 'office desk'],
-  van: ['delivery van', 'delivery truck'],
-  office: ['office worker desk', 'office'],
-};
-
 function licenseLabel(code) {
   const c = (code || '').toLowerCase();
-  if (c === 'cc0') return 'CC0';
-  if (c === 'pdm') return 'Public Domain';
-  return 'CC ' + c.toUpperCase();
+  if (c === 'pdm' || c === 'public domain') return 'Public Domain';
+  return 'CC0';
 }
 
-async function fetchOpenversePhoto(query, signal) {
-  // cc0,pdm → no attribution required; by (CC BY) → free to use with credit,
-  // which we always display. All allow commercial use and modification.
-  const url =
-    'https://api.openverse.org/v1/images/?q=' +
-    encodeURIComponent(query) +
-    '&license=cc0,pdm,by&category=photograph&page_size=12';
-  const res = await fetch(url, { signal, headers: { Accept: 'application/json' } });
-  if (!res.ok) throw new Error('openverse request failed');
-  const data = await res.json();
-  const hit = (data.results || []).find((r) => r.url);
-  if (!hit) throw new Error('no openly-licensed result');
-  return {
-    url: hit.url,
-    title: hit.title || 'Untitled',
-    license: hit.license || 'cc0',
-    licenseUrl: hit.license_url || 'https://creativecommons.org/publicdomain/zero/1.0/',
-    landing: hit.foreign_landing_url || hit.url,
-    creator: hit.creator || null,
-  };
-}
-
-export default function Part1Photo({ description, query }) {
+/**
+ * Shows a fixed, verified openly-licensed photo for the item (chosen to match
+ * the scene). If it fails to load (offline), an original SVG illustration of the
+ * same scene is drawn instead, so the offline build always shows a picture.
+ */
+export default function Part1Photo({ description, photo }) {
   const scene = pickScene(description);
   const Scene = SCENES[scene] || Phone;
-  const [photo, setPhoto] = useState(null);
-
-  useEffect(() => {
-    let active = true;
-    const ctrl = new AbortController();
-    const timeout = setTimeout(() => ctrl.abort(), 9000);
-    // Per-item query (when provided) gives each photo distinct, accurate
-    // results; otherwise fall back to the per-scene queries.
-    const queries = query
-      ? [query, ...(SCENE_QUERY[scene] || [])]
-      : SCENE_QUERY[scene] || [description];
-    (async () => {
-      for (const q of queries) {
-        try {
-          const p = await fetchOpenversePhoto(q, ctrl.signal);
-          if (active) setPhoto(p);
-          return;
-        } catch {
-          /* try the next (broader) query */
-        }
-      }
-      // every query failed → keep the SVG illustration
-    })().finally(() => clearTimeout(timeout));
-    return () => {
-      active = false;
-      ctrl.abort();
-      clearTimeout(timeout);
-    };
-  }, [scene, description]);
+  const [failed, setFailed] = useState(false);
+  const showPhoto = photo && photo.url && !failed;
 
   return (
     <figure className="p1-photo">
-      {photo ? (
+      {showPhoto ? (
         <img
           className="p1-img"
           src={photo.url}
           alt={description}
           loading="lazy"
-          onError={() => setPhoto(null)}
+          onError={() => setFailed(true)}
         />
       ) : (
         <Scene />
       )}
       <figcaption className="p1-caption">
         {description}
-        {photo && (
+        {showPhoto && (
           <span className="p1-credit">
             {' '}— Photo:{' '}
-            <a href={photo.landing} target="_blank" rel="noreferrer">
-              {photo.title}
-            </a>
-            {photo.creator ? ` by ${photo.creator}` : ''} ·{' '}
-            <a href={photo.licenseUrl} target="_blank" rel="noreferrer">
-              {licenseLabel(photo.license)}
+            <a href={photo.source} target="_blank" rel="noreferrer">
+              {photo.title || 'source'}
             </a>{' '}
-            via Openverse
+            · {licenseLabel(photo.license)}
           </span>
         )}
       </figcaption>
